@@ -1,0 +1,2466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - xOverwatch</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: #0f0f0f;
+            color: #ffffff;
+            font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .documentation-container {
+            display: flex;
+            margin-top: 70px; /* Reset to original spacing */
+            min-height: calc(100vh - 70px);
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: #1a1a1a;
+            border-right: 1px solid #333333;
+            padding: 20px;
+            position: fixed;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            top: 70px; /* Reset to original position */
+            left: 0;
+        }
+        
+        .sidebar h3 {
+            color: #F19E38;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            border-bottom: 2px solid #F19E38;
+            padding-bottom: 5px;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar li {
+            margin: 8px 0;
+        }
+        
+        .sidebar span {
+            color: #e0e0e0;
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        
+        .sidebar span:hover {
+            background-color: #333333;
+            color: #E8EBF7;
+        }
+        
+        .sidebar span.active {
+            background-color: #333333;
+            color: #F19E38;
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: 270px; /* Add 20px spacing between sidebar and main content */
+            margin-top: 0; /* Align with sidebar - no extra margin */
+            padding: 0px 20px 20px 40px; /* Reduced right padding for better layout */
+            box-sizing: border-box; /* Ensure padding is included in width calculation */
+            width: calc(100% - 270px); /* Adjust for new margin */
+        }
+        
+        .doc-section {
+            margin: 15px 0; /* Add small spacing between sections */
+            padding: 20px;
+            background: #1a1a1a;
+            border-radius: 0; /* Remove rounded corners */
+            border: none; /* Remove borders */
+        }
+        
+        .doc-section:first-child {
+            margin-top: 0; /* Align with sidebar - both start at same level from navbar */
+        }
+        
+        .doc-section h2 {
+            color: #ffffff;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #4a4a4a;
+            padding-bottom: 5px;
+        }
+        
+        .doc-section h3 {
+            color: #ffffff;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .doc-section p {
+            line-height: 1.8;
+            margin: 10px 0;
+            color: #e0e0e0;
+            font-weight: 300;
+        }
+        
+        .doc-section ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .doc-section li {
+            margin: 5px 0;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        
+        .code-block {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 16px 0;
+            overflow-x: auto;
+            position: relative;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            color: #e6edf3;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.45;
+            overflow: visible;
+        }
+        
+        .code-block code {
+            background: none;
+            padding: 0;
+            border: none;
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+        }
+        
+        .code-header {
+            background: #21262d;
+            color: #f0f6fc;
+            padding: 8px 16px;
+            margin: -16px -16px 16px -16px;
+            border-bottom: 1px solid #30363d;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .gist-embed {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+        
+        .gist-meta {
+            background: #161b22;
+            padding: 8px 16px;
+            border-bottom: 1px solid #30363d;
+            font-size: 12px;
+            color: #7d8590;
+        }
+        
+        .gist-file {
+            background: #0d1117;
+        }
+        
+        .gist-file-header {
+            background: #161b22;
+            padding: 8px 16px;
+            border-bottom: 1px solid #30363d;
+            font-size: 14px;
+            color: #f0f6fc;
+            font-weight: 600;
+        }
+        
+        .gist-file-content {
+            padding: 0;
+            color: #e6edf3;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 14px;
+            line-height: 1.45;
+            overflow: visible;
+            position: relative;
+            width: 100%;
+        }
+        
+        /* Full height for Terraform deployment section */
+        #aws-deployment .gist-file-content {
+            max-height: none;
+            overflow: visible;
+        }
+        
+        /* Ensure gist containers don't cut off content */
+        .gist-embed, .gist-file {
+            overflow: visible;
+        }
+        
+
+        
+        /* Regular code blocks without line numbers */
+        .gist-file-content pre {
+            margin: 0;
+            padding: 16px;
+        }
+        
+        /* Copy button styling */
+        .gist-file-header {
+            position: relative;
+        }
+        
+        .copy-button {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #7d8590;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .copy-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+        
+        .copy-button:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+        
+        .copy-button.copied {
+            color: #28a745;
+        }
+        
+        .copy-icon {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+        }
+        
+        /* Make API and LLMJ code blocks scrollable by constraining the entire container */
+        #context-extraction .gist-file-content,
+        #metrics .gist-file-content {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        /* Python syntax highlighting - Cursor-style theme */
+        .gist-file-content .python-keyword {
+            color: #7FD4C5;
+        }
+        
+        .gist-file-content .python-string {
+            color: #E5B387;
+        }
+        
+        .gist-file-content .python-comment {
+            color: #6D6D6D;
+        }
+        
+        .gist-file-content .python-function {
+            color: #E5B387;
+        }
+        
+        .gist-file-content .python-class {
+            color: #93CECB;
+        }
+        
+        .gist-file-content .python-number {
+            color: #E5C995;
+        }
+        
+        .gist-file-content .python-bracket {
+            color: #F9D849;
+        }
+        
+        .gist-file-content .python-decorator {
+            color: #ff8c42;
+        }
+        
+        .gist-file-content .python-variable {
+            color: #A197E7;
+        }
+        
+        .gist-file-content .python-property {
+            color: #A79CEF;
+        }
+        
+        .gist-file-content .python-operator {
+            color: #ffffff;
+        }
+        
+        /* TypeScript syntax highlighting - Cursor-style theme */
+        .gist-file-content .ts-keyword {
+            color: #7FD4C5;
+        }
+        
+        .gist-file-content .ts-string {
+            color: #E5B387;
+        }
+        
+        .gist-file-content .ts-comment {
+            color: #6D6D6D;
+        }
+        
+        .gist-file-content .ts-function {
+            color: #E5B387;
+        }
+        
+        .gist-file-content .ts-class {
+            color: #93CECB;
+        }
+        
+        .gist-file-content .ts-interface {
+            color: #93CECB;
+        }
+        
+        .gist-file-content .ts-type {
+            color: #93CECB;
+        }
+        
+        .gist-file-content .ts-number {
+            color: #E5C995;
+        }
+        
+        .gist-file-content .ts-bracket {
+            color: #F9D849;
+        }
+        
+        .gist-file-content .ts-import {
+            color: #7FD4C5;
+        }
+        
+        .gist-file-content .ts-import-name {
+            color: #9DC0F5;
+        }
+        
+        .gist-file-content .ts-property {
+            color: #A79CEF;
+        }
+        
+        .gist-file-content .ts-operator {
+            color: #ffffff;
+        }
+        
+        .gist-file-content .ts-variable {
+            color: #A197E7;
+        }
+        
+
+        
+        /* HTTP Methods Tables */
+        .http-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .http-table th {
+            background: #2a2a2a;
+            color: #ffffff;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #d97706;
+        }
+        
+        .http-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #333333;
+            color: #e0e0e0;
+            font-weight: 300;
+        }
+        
+        .http-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .http-table tr:hover {
+            background: #222222;
+        }
+        
+        .http-method {
+            color: #F19E38;
+            font-weight: 600;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+        
+        .http-status {
+            color: #ffffff;
+            font-weight: 700;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+        
+        .http-table .status-category {
+            font-weight: 700 !important;
+            color: #F19E38;
+        }
+        
+        /* Metrics Cards */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .metric-card {
+            background: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+            border-color: #F19E38;
+            box-shadow: 0 4px 8px rgba(241, 158, 56, 0.08);
+        }
+        
+        .metric-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+
+        
+        .metric-title {
+            color: #ffffff;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .metric-acronym {
+            color: #888888;
+            font-size: 0.9em;
+            font-weight: 400;
+            margin-left: 8px;
+        }
+        
+        .metric-description {
+            color: #e0e0e0;
+            font-weight: 300;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .metric-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .metric-features li {
+            color: #cccccc;
+            font-size: 0.9em;
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .metric-features li::before {
+            content: "▸";
+            color: #F19E38;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .metric-type-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #2a2a2a;
+            color: #F19E38;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+
+        
+        .warning {
+            background: rgba(241, 158, 56, 0.08);
+            border: 1px solid #F19E38;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #e0e0e0;
+        }
+        
+        .warning .warning-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #F19E38;
+        }
+        
+        .info {
+            background: #0f1419;
+            border: 1px solid #388bfd;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #79c0ff;
+        }
+        
+        .info .info-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #58a6ff;
+        }
+        
+        .note-box {
+            background: rgba(241, 158, 56, 0.08);
+            border: 1px solid #F19E38;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+        
+        .note-box strong {
+            font-size: 1.1em;
+            color: #F19E38;
+        }
+        
+        /* Home page navbar styles */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+        }
+
+        .social-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-right: 40px;
+            margin-left: auto;
+        }
+
+        .social-link {
+            color: #ffffff;
+            font-size: 1.6rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .social-link:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .social-link:active {
+            transform: translateY(0);
+        }
+
+        .nav-button {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 20px;
+            margin-top: 3px;
+        }
+        
+        .nav-button:first-child {
+            margin-left: 20px;
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-button:active {
+            transform: translateY(1px);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                max-width: 100%;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <button class="social-link" aria-label="GitHub" onclick="window.open('https://github.com/nl-alonso', '_blank')" style="margin-left: 20px; margin-top: 3px;">
+            <i class="fa-brands fa-github"></i>
+        </button>
+        <button class="nav-button" onclick="window.location.href='/'">Home</button>
+        <button class="nav-button" onclick="window.location.href='evaluations.html'">Evaluations</button>
+        <button class="nav-button" onclick="window.location.href='documentation.html'">Documentation</button>
+        <div class="social-links">
+        </div>
+    </nav>
+
+    <div class="documentation-container">
+        <div class="sidebar">
+            <h3>Navigation</h3>
+            <ul>
+                <li><span onclick="document.getElementById('overview').scrollIntoView({behavior: 'smooth'})">Overview</span></li>
+                <li><span onclick="document.getElementById('quick-start').scrollIntoView({behavior: 'smooth'})">Core Architecture</span></li>
+                <li><span onclick="document.getElementById('context-extraction').scrollIntoView({behavior: 'smooth'})">Context Extraction</span></li>
+                <li><span onclick="document.getElementById('http-protocol').scrollIntoView({behavior: 'smooth'})">HTTP Protocol</span></li>
+                <li><span onclick="document.getElementById('metrics').scrollIntoView({behavior: 'smooth'})">Evaluation Metrics</span></li>
+                <li><span onclick="document.getElementById('api-management').scrollIntoView({behavior: 'smooth'})">API Management</span></li>
+                <li><span onclick="document.getElementById('aws-deployment').scrollIntoView({behavior: 'smooth'})">Deploy with Terraform</span></li>
+            </ul>
+        </div>
+        
+        <div class="main-content">
+            <div class="doc-section" id="overview">
+                <h2>Overview</h2>
+                <p>Welcome to the docs page for xOverwatch, an AI-native platform for extracting and contextualizing sensitive information in highly secure environments.</p>
+                <p>I built this application as a demo for the xAI team. No data will be retained, but please do not upload documents containing personal or sensitive information.</p>
+                
+                <div class="note-box">
+                    <strong style="color: #F19E38;">Note:</strong> xOverwatch uses Grok and Gemini for various natural language processing tasks. Due to cost constraints, individual file sizes have been capped to 1M tokens per file. Reach out to request a rate limit increase. (See Context Extraction)
+                </div>
+            </div>
+
+            <div class="doc-section" id="quick-start">
+                <h2>Core Architecture</h2>
+                
+                <p>xOverwatch uses grok-3-mini-fast for document analysis and summarization, and uses gemini-2.5-flash-lite-preview-06-17 for LLM as a Judge evaluations.</p>
+                
+                <div class="warning">
+                    <div class="warning-title">⚠️ Core Architecture</div>
+                    <ul>
+                        <li>FastAPI for REST API endpoints with Pydantic models for request/response validation</li>
+                        <li>Python for backend services, document processing, and Grok/Gemini Integration</li>
+                        <li>TypeScript for frontend development with type-safe API interactions and component interfaces</li>
+                        <li>AWS | S3, Lambda, CloudFront, DynamoDB, API Gateway, AWS Secrets Manager, Amplify, Cognito</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="doc-section" id="context-extraction">
+                <h2>Context Extraction</h2>
+                <p>To get started, navigate to the home page, click the cloud icon on the left side of the chat bar to browse your local directory and upload a file for summarization, or, drag and drop it into the 3-dimensional rotating sphere of particles. For demo purposes, use .txt, .doc, or .docx file types.</p>
+                
+                <h3>The 3D Sphere</h3>
+                <p>I created the 3D particle rendering with Three.js and 5000 individual points positioned in spherical coordinates (theta, phi, radius), where each particle has unique oscillation properties such as amplitude, frequency, and phase for radial pulsing animations. The sphere uses BufferGeometry for rendering with additive blending for a glowing effect, and the entire system rotates continuously while each particle expands and contracts from its base radius position. I used a series of trigonometric functions, parametric equations, and matrix multiplication to calculate the spherical coordinate transformations for positioning and animation. (See code snippet below and feel free to use/extend it)</p>
+                
+                <div class="gist-embed">
+                    <div class="gist-meta">
+                        <i class="fab fa-github"></i> nl-alonso/3dsphere.ts
+                    </div>
+                    <div class="gist-file">
+                        <div class="gist-file-header">
+                            <i class="far fa-file-code"></i> 3dsphere.ts
+                            <button class="copy-button" onclick="copyCodeBlock(this)" title="Copy to clipboard">
+                                <svg class="copy-icon" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-8.5A1.75 1.75 0 0 1 4 13.25V1.75zm1.75-.25a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H5.75z"/>
+                                    <path d="M1.75 3A1.75 1.75 0 0 0 0 4.75v8.5C0 14.216.784 15 1.75 15H7v-1.5H1.75a.25.25 0 0 1-.25-.25v-8.5a.25.25 0 0 1 .25-.25H7V3H1.75z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="gist-file-content" data-start="1">
+                            <pre><code><span class="ts-comment">// main.ts</span>
+<span class="ts-keyword">import</span> <span class="ts-operator">*</span> <span class="ts-keyword">as</span> <span class="ts-class">THREE</span> <span class="ts-keyword">from</span> <span class="ts-string">'https://unpkg.com/three@0.168.0/build/three.module.js?module'</span>;
+<span class="ts-keyword">import</span> <span class="ts-bracket">{</span> <span class="ts-class">OrbitControls</span> <span class="ts-bracket">}</span> <span class="ts-keyword">from</span> <span class="ts-string">'https://unpkg.com/three@0.168.0/examples/jsm/controls/OrbitControls.js?module'</span>;
+
+<span class="ts-keyword">interface</span> <span class="ts-interface">ParticleData</span> <span class="ts-bracket">{</span>
+    <span class="ts-property">base_r</span>: <span class="ts-type">number</span>;
+    <span class="ts-property">original_base_r</span>: <span class="ts-type">number</span>;
+    <span class="ts-property">theta</span>: <span class="ts-type">number</span>;
+    <span class="ts-property">phi</span>: <span class="ts-type">number</span>;
+    <span class="ts-property">amp</span>: <span class="ts-type">number</span>;
+    <span class="ts-property">freq</span>: <span class="ts-type">number</span>;
+    <span class="ts-property">phase</span>: <span class="ts-type">number</span>;
+    <span class="ts-property">pulsePhase</span>: <span class="ts-type">number</span>;
+    <span class="ts-property">pulseDirection</span>: <span class="ts-type">number</span>;
+<span class="ts-bracket">}</span>
+
+<span class="ts-keyword">private</span> <span class="ts-function">createParticles</span><span class="ts-bracket">(</span><span class="ts-bracket">)</span> <span class="ts-bracket">{</span>
+    <span class="ts-keyword">const</span> <span class="ts-variable">particleCount</span> <span class="ts-operator">=</span> <span class="ts-number">5000</span>;
+    <span class="ts-keyword">const</span> <span class="ts-variable">baseRadius</span> <span class="ts-operator">=</span> <span class="ts-number">20.5</span>;
+    <span class="ts-keyword">const</span> <span class="ts-variable">radiusNoise</span> <span class="ts-operator">=</span> <span class="ts-number">4</span>;
+    <span class="ts-keyword">const</span> <span class="ts-variable">ampMax</span> <span class="ts-operator">=</span> <span class="ts-number">2</span>;
+    <span class="ts-keyword">const</span> <span class="ts-variable">freqBase</span> <span class="ts-operator">=</span> <span class="ts-number">0.5</span>;
+
+    <span class="ts-keyword">const</span> <span class="ts-variable">geometry</span> <span class="ts-operator">=</span> <span class="ts-keyword">new</span> <span class="ts-class">THREE</span>.<span class="ts-class">BufferGeometry</span>();
+    <span class="ts-keyword">const</span> <span class="ts-variable">positions</span> <span class="ts-operator">=</span> <span class="ts-keyword">new</span> <span class="ts-class">Float32Array</span>(<span class="ts-variable">particleCount</span> <span class="ts-operator">*</span> <span class="ts-number">3</span>);
+    <span class="ts-keyword">const</span> <span class="ts-variable">colors</span> <span class="ts-operator">=</span> <span class="ts-keyword">new</span> <span class="ts-class">Float32Array</span>(<span class="ts-variable">particleCount</span> <span class="ts-operator">*</span> <span class="ts-number">3</span>);
+
+    <span class="ts-keyword">for</span> (<span class="ts-keyword">let</span> <span class="ts-variable">i</span> <span class="ts-operator">=</span> <span class="ts-number">0</span>; <span class="ts-variable">i</span> <span class="ts-operator">&lt;</span> <span class="ts-variable">particleCount</span>; <span class="ts-variable">i</span>++) {
+        <span class="ts-comment">// Spherical coordinate calculation</span>
+        <span class="ts-keyword">const</span> <span class="ts-variable">theta</span> <span class="ts-operator">=</span> <span class="ts-class">Math</span>.random<span class="ts-bracket">(</span><span class="ts-bracket">)</span> <span class="ts-operator">*</span> <span class="ts-number">2</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.<span class="ts-property">PI</span>;
+        <span class="ts-keyword">const</span> <span class="ts-variable">phi</span> <span class="ts-operator">=</span> <span class="ts-class">Math</span>.acos<span class="ts-bracket">(</span><span class="ts-number">2</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.random<span class="ts-bracket">(</span><span class="ts-bracket">)</span> <span class="ts-operator">-</span> <span class="ts-number">1</span><span class="ts-bracket">)</span>;
+        <span class="ts-keyword">const</span> <span class="ts-variable">base_r</span> <span class="ts-operator">=</span> <span class="ts-variable">baseRadius</span> <span class="ts-operator">+</span> <span class="ts-bracket">(</span><span class="ts-class">Math</span>.random<span class="ts-bracket">(</span><span class="ts-bracket">)</span> <span class="ts-operator">-</span> <span class="ts-number">0.5</span><span class="ts-bracket">)</span> <span class="ts-operator">*</span> <span class="ts-variable">radiusNoise</span>;
+        <span class="ts-keyword">const</span> <span class="ts-variable">amp</span> <span class="ts-operator">=</span> <span class="ts-class">Math</span>.random<span class="ts-bracket">(</span><span class="ts-bracket">)</span> <span class="ts-operator">*</span> <span class="ts-variable">ampMax</span>;
+        <span class="ts-keyword">const</span> <span class="ts-variable">freq</span> <span class="ts-operator">=</span> <span class="ts-variable">freqBase</span> <span class="ts-operator">+</span> <span class="ts-class">Math</span>.random<span class="ts-bracket">(</span><span class="ts-bracket">)</span> <span class="ts-operator">*</span> <span class="ts-number">0.5</span>;
+        <span class="ts-keyword">const</span> <span class="ts-variable">phase</span> <span class="ts-operator">=</span> <span class="ts-class">Math</span>.random<span class="ts-bracket">(</span><span class="ts-bracket">)</span> <span class="ts-operator">*</span> <span class="ts-number">2</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.<span class="ts-property">PI</span>;
+
+        <span class="ts-keyword">this</span>.<span class="ts-property">particleData</span>.push<span class="ts-bracket">(</span>{ 
+            <span class="ts-property">base_r</span>, 
+            <span class="ts-property">original_base_r</span>: <span class="ts-variable">base_r</span>, 
+            <span class="ts-property">theta</span>, 
+            <span class="ts-property">phi</span>, 
+            <span class="ts-property">amp</span>, 
+            <span class="ts-property">freq</span>, 
+            <span class="ts-property">phase</span>,
+            <span class="ts-property">pulsePhase</span>: <span class="ts-class">Math</span>.random<span class="ts-bracket">(</span><span class="ts-bracket">)</span> <span class="ts-operator">*</span> <span class="ts-number">2</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.<span class="ts-property">PI</span>,
+            <span class="ts-property">pulseDirection</span>: <span class="ts-class">Math</span>.random<span class="ts-bracket">(</span><span class="ts-bracket">)</span> <span class="ts-operator">&gt;</span> <span class="ts-number">0.5</span> <span class="ts-operator">?</span> <span class="ts-number">1</span> <span class="ts-operator">:</span> <span class="ts-operator">-</span><span class="ts-number">1</span>
+        }<span class="ts-bracket">)</span>;
+
+        <span class="ts-comment">// Convert spherical to cartesian coordinates</span>
+        <span class="ts-variable">positions</span><span class="ts-bracket">[</span><span class="ts-variable">i</span> <span class="ts-operator">*</span> <span class="ts-number">3</span><span class="ts-bracket">]</span> <span class="ts-operator">=</span> <span class="ts-variable">base_r</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.sin<span class="ts-bracket">(</span><span class="ts-variable">phi</span><span class="ts-bracket">)</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.cos<span class="ts-bracket">(</span><span class="ts-variable">theta</span><span class="ts-bracket">)</span>;
+        <span class="ts-variable">positions</span><span class="ts-bracket">[</span><span class="ts-variable">i</span> <span class="ts-operator">*</span> <span class="ts-number">3</span> <span class="ts-operator">+</span> <span class="ts-number">1</span><span class="ts-bracket">]</span> <span class="ts-operator">=</span> <span class="ts-variable">base_r</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.sin<span class="ts-bracket">(</span><span class="ts-variable">phi</span><span class="ts-bracket">)</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.sin<span class="ts-bracket">(</span><span class="ts-variable">theta</span><span class="ts-bracket">)</span>;
+        <span class="ts-variable">positions</span><span class="ts-bracket">[</span><span class="ts-variable">i</span> <span class="ts-operator">*</span> <span class="ts-number">3</span> <span class="ts-operator">+</span> <span class="ts-number">2</span><span class="ts-bracket">]</span> <span class="ts-operator">=</span> <span class="ts-variable">base_r</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.cos<span class="ts-bracket">(</span><span class="ts-variable">phi</span><span class="ts-bracket">)</span>;
+
+        <span class="ts-comment">// Set particle colors</span>
+        <span class="ts-variable">colors</span><span class="ts-bracket">[</span><span class="ts-variable">i</span> <span class="ts-operator">*</span> <span class="ts-number">3</span><span class="ts-bracket">]</span> <span class="ts-operator">=</span> <span class="ts-number">0.8</span>;
+        <span class="ts-variable">colors</span><span class="ts-bracket">[</span><span class="ts-variable">i</span> <span class="ts-operator">*</span> <span class="ts-number">3</span> <span class="ts-operator">+</span> <span class="ts-number">1</span><span class="ts-bracket">]</span> <span class="ts-operator">=</span> <span class="ts-number">0.8</span>;
+        <span class="ts-variable">colors</span><span class="ts-bracket">[</span><span class="ts-variable">i</span> <span class="ts-operator">*</span> <span class="ts-number">3</span> <span class="ts-operator">+</span> <span class="ts-number">2</span><span class="ts-bracket">]</span> <span class="ts-operator">=</span> <span class="ts-number">0.8</span>;
+    }
+
+    <span class="ts-variable">geometry</span>.<span class="ts-function">setAttribute</span><span class="ts-bracket">(</span><span class="ts-string">'position'</span>, <span class="ts-keyword">new</span> <span class="ts-class">THREE</span>.<span class="ts-class">BufferAttribute</span>(<span class="ts-variable">positions</span>, <span class="ts-number">3</span>)<span class="ts-bracket">)</span>;
+    <span class="ts-variable">geometry</span>.<span class="ts-function">setAttribute</span><span class="ts-bracket">(</span><span class="ts-string">'color'</span>, <span class="ts-keyword">new</span> <span class="ts-class">THREE</span>.<span class="ts-class">BufferAttribute</span>(<span class="ts-variable">colors</span>, <span class="ts-number">3</span>)<span class="ts-bracket">)</span>;
+
+    <span class="ts-keyword">const</span> <span class="ts-variable">material</span> <span class="ts-operator">=</span> <span class="ts-keyword">new</span> <span class="ts-class">THREE</span>.<span class="ts-class">PointsMaterial</span><span class="ts-bracket">(</span>{
+        <span class="ts-property">size</span>: <span class="ts-number">0.12</span>,
+        <span class="ts-property">vertexColors</span>: <span class="ts-keyword">true</span>,
+        <span class="ts-property">blending</span>: <span class="ts-class">THREE</span>.<span class="ts-property">AdditiveBlending</span>,
+        <span class="ts-property">transparent</span>: <span class="ts-keyword">true</span>,
+        <span class="ts-property">depthWrite</span>: <span class="ts-keyword">false</span>
+    }<span class="ts-bracket">)</span>;
+
+    <span class="ts-keyword">this</span>.<span class="ts-property">particles</span> <span class="ts-operator">=</span> <span class="ts-keyword">new</span> <span class="ts-class">THREE</span>.<span class="ts-class">Points</span>(<span class="ts-variable">geometry</span>, <span class="ts-variable">material</span>);
+    <span class="ts-keyword">this</span>.<span class="ts-property">particles</span>.<span class="ts-property">position</span>.<span class="ts-property">y</span> <span class="ts-operator">=</span> <span class="ts-number">7</span>;
+    <span class="ts-keyword">this</span>.<span class="ts-property">scene</span>.<span class="ts-function">add</span><span class="ts-bracket">(</span><span class="ts-keyword">this</span>.<span class="ts-property">particles</span><span class="ts-bracket">)</span>;
+}
+
+<span class="ts-keyword">private</span> <span class="ts-function">animate</span><span class="ts-bracket">(</span><span class="ts-bracket">)</span> <span class="ts-bracket">{</span>
+    <span class="ts-function">requestAnimationFrame</span><span class="ts-bracket">(</span><span class="ts-keyword">this</span>.<span class="ts-function">animate</span>.<span class="ts-function">bind</span><span class="ts-bracket">(</span><span class="ts-keyword">this</span><span class="ts-bracket">)</span><span class="ts-bracket">)</span>;
+    
+    <span class="ts-keyword">const</span> <span class="ts-variable">time</span> <span class="ts-operator">=</span> <span class="ts-keyword">this</span>.<span class="ts-property">clock</span>.<span class="ts-function">getElapsedTime</span><span class="ts-bracket">(</span><span class="ts-bracket">)</span>;
+    <span class="ts-keyword">const</span> <span class="ts-variable">positions</span> <span class="ts-operator">=</span> <span class="ts-keyword">this</span>.<span class="ts-property">particles</span>.<span class="ts-property">geometry</span>.<span class="ts-property">attributes</span>.<span class="ts-property">position</span>.<span class="ts-property">array</span> <span class="ts-keyword">as</span> <span class="ts-class">Float32Array</span>;
+    
+    <span class="ts-keyword">for</span> <span class="ts-bracket">(</span><span class="ts-keyword">let</span> <span class="ts-variable">i</span> <span class="ts-operator">=</span> <span class="ts-number">0</span>; <span class="ts-variable">i</span> <span class="ts-operator">&lt;</span> <span class="ts-keyword">this</span>.<span class="ts-property">particleData</span>.<span class="ts-property">length</span>; <span class="ts-variable">i</span>++<span class="ts-bracket">)</span> <span class="ts-bracket">{</span>
+        <span class="ts-keyword">const</span> <span class="ts-variable">pd</span> <span class="ts-operator">=</span> <span class="ts-keyword">this</span>.<span class="ts-property">particleData</span><span class="ts-bracket">[</span><span class="ts-variable">i</span><span class="ts-bracket">]</span>;
+        
+        <span class="ts-comment">// Calculate radial oscillation</span>
+        <span class="ts-keyword">const</span> <span class="ts-variable">r</span> <span class="ts-operator">=</span> <span class="ts-variable">pd</span>.<span class="ts-property">base_r</span> <span class="ts-operator">+</span> <span class="ts-variable">pd</span>.<span class="ts-property">amp</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.sin<span class="ts-bracket">(</span><span class="ts-variable">time</span> <span class="ts-operator">*</span> <span class="ts-variable">pd</span>.<span class="ts-property">freq</span> <span class="ts-operator">+</span> <span class="ts-variable">pd</span>.<span class="ts-property">phase</span><span class="ts-bracket">)</span>;
+        
+        <span class="ts-comment">// Apply spherical coordinate transformations</span>
+        <span class="ts-variable">positions</span><span class="ts-bracket">[</span><span class="ts-variable">i</span> <span class="ts-operator">*</span> <span class="ts-number">3</span><span class="ts-bracket">]</span> <span class="ts-operator">=</span> <span class="ts-variable">r</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.sin<span class="ts-bracket">(</span><span class="ts-variable">pd</span>.<span class="ts-property">phi</span><span class="ts-bracket">)</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.cos<span class="ts-bracket">(</span><span class="ts-variable">pd</span>.<span class="ts-property">theta</span><span class="ts-bracket">)</span>;
+        <span class="ts-variable">positions</span><span class="ts-bracket">[</span><span class="ts-variable">i</span> <span class="ts-operator">*</span> <span class="ts-number">3</span> <span class="ts-operator">+</span> <span class="ts-number">1</span><span class="ts-bracket">]</span> <span class="ts-operator">=</span> <span class="ts-variable">r</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.sin<span class="ts-bracket">(</span><span class="ts-variable">pd</span>.<span class="ts-property">phi</span><span class="ts-bracket">)</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.sin<span class="ts-bracket">(</span><span class="ts-variable">pd</span>.<span class="ts-property">theta</span><span class="ts-bracket">)</span>;
+        <span class="ts-variable">positions</span><span class="ts-bracket">[</span><span class="ts-variable">i</span> <span class="ts-operator">*</span> <span class="ts-number">3</span> <span class="ts-operator">+</span> <span class="ts-number">2</span><span class="ts-bracket">]</span> <span class="ts-operator">=</span> <span class="ts-variable">r</span> <span class="ts-operator">*</span> <span class="ts-class">Math</span>.cos<span class="ts-bracket">(</span><span class="ts-variable">pd</span>.<span class="ts-property">phi</span><span class="ts-bracket">)</span>;
+    }
+    
+    <span class="ts-keyword">this</span>.<span class="ts-property">particles</span>.<span class="ts-property">geometry</span>.<span class="ts-property">attributes</span>.<span class="ts-property">position</span>.<span class="ts-property">needsUpdate</span> <span class="ts-operator">=</span> <span class="ts-keyword">true</span>;
+    
+    <span class="ts-comment">// Continuous rotation</span>
+    <span class="ts-keyword">this</span>.<span class="ts-property">particles</span>.<span class="ts-property">rotation</span>.<span class="ts-property">y</span> <span class="ts-operator">+=</span> <span class="ts-number">0.002</span>;
+    
+    <span class="ts-keyword">this</span>.<span class="ts-property">renderer</span>.<span class="ts-function">render</span><span class="ts-bracket">(</span><span class="ts-keyword">this</span>.<span class="ts-property">scene</span>, <span class="ts-keyword">this</span>.<span class="ts-property">camera</span><span class="ts-bracket">)</span>;
+}
+
+<span class="ts-comment">// Initialize the particle system</span>
+<span class="ts-keyword">new</span> <span class="ts-class">ParticleSystem</span><span class="ts-bracket">(</span><span class="ts-bracket">)</span>;</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>When users upload documents through the interface, the files are processed through a secure serverless architecture. AWS API Gateway handles the initial request routing and authentication, while uploaded documents are temporarily stored in S3 buckets with strict access controls and automatic expiration policies. This ensures both scalability and security, as files are processed asynchronously by Lambda functions and automatically purged after analysis to maintain data privacy.</p>
+                
+                <h3>Grok for Document Summarization</h3>
+                <p>The Grok API serves as the core intelligence engine for context extraction, utilizing state-of-the-art natural language processing to understand document semantics. Key capabilities include:</p>
+                
+                <ul>
+                    <li><strong style="color: #F19E38;">Semantic Understanding:</strong> <span style="font-weight: 300;">Deep comprehension of document meaning beyond keyword matching</span></li>
+                    <li><strong style="color: #F19E38;">Summarization:</strong> <span style="font-weight: 300;">Intelligent extraction and condensation of key information and main concepts</span></li>
+                    <li><strong style="color: #F19E38;">Entity Recognition:</strong> <span style="font-weight: 300;">Identification of people, organizations, locations, and concepts</span></li>
+                    <li><strong style="color: #F19E38;">Relationship Mapping:</strong> <span style="font-weight: 300;">Understanding connections between different document elements</span></li>
+                    <li><strong style="color: #F19E38;">Intent Classification:</strong> <span style="font-weight: 300;">Determining document purpose and primary objectives</span></li>
+                    <li><strong style="color: #F19E38;">Context Preservation:</strong> <span style="font-weight: 300;">Maintaining important nuances and contextual information</span></li>
+                </ul>
+                
+                <div class="note-box" style="margin-top: 25px;">
+                    <strong>Note:</strong> xOverwatch leverages external API endpoints to make requests to Grok for document summarization and Gemini for LLM-as-a-Judge evaluations. You can restrict internet access to these endpoints using a NAT Gateway, but organizations operating in air-gapped environments physically isolated from the internet will want to consider utilizing frozen model weights and localized fine-tuning.
+                </div>
+                
+                <h3>Grok API Integration</h3>
+                <p>xOverwatch processes all document types (Word documents, PDFs, and text files) using grok-3-mini-fast for analysis. PDFs are processed using text extraction (pdfplumber), Word documents are parsed with python-docx, and all content is sent as structured text to grok-3-mini-fast.</p>
+                
+                <div class="gist-embed">
+                    <div class="gist-meta">
+                        <i class="fab fa-github"></i> nl-alonso/xoverwatch-grok-integration
+                    </div>
+                    <div class="gist-file">
+                        <div class="gist-file-header">
+                            <i class="far fa-file-code"></i> grok_api_integration.py
+                            <button class="copy-button" onclick="copyCodeBlock(this)" title="Copy to clipboard">
+                                <svg class="copy-icon" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-8.5A1.75 1.75 0 0 1 4 13.25V1.75zm1.75-.25a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H5.75z"/>
+                                    <path d="M1.75 3A1.75 1.75 0 0 0 0 4.75v8.5C0 14.216.784 15 1.75 15H7v-1.5H1.75a.25.25 0 0 1-.25-.25v-8.5a.25.25 0 0 1 .25-.25H7V3H1.75z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="gist-file-content" data-start="1">
+                            <pre><code><span class="python-string">"""
+xOverwatch - Grok API Integration Example
+
+This shows how the xOverwatch application makes API calls to the xAI Grok endpoint
+for document analysis with structured JSON responses.
+"""</span>
+
+<span class="python-keyword">import</span> <span class="python-class">json</span>
+<span class="python-keyword">import</span> <span class="python-class">requests</span>
+<span class="python-keyword">import</span> <span class="python-class">logging</span>
+<span class="python-keyword">from</span> <span class="python-class">typing</span> <span class="python-keyword">import</span> <span class="python-class">Dict</span>, <span class="python-class">Any</span>
+
+
+<span class="python-keyword">def</span> <span class="python-function">process_document_with_grok</span><span class="python-bracket">(</span>
+    <span class="python-variable">document_text</span>: <span class="python-class">str</span>,
+    <span class="python-variable">query</span>: <span class="python-class">str</span>,
+    <span class="python-variable">api_key</span>: <span class="python-class">str</span>
+<span class="python-bracket">)</span> <span class="python-operator">-></span> <span class="python-class">str</span>:
+    <span class="python-string">"""
+    Process document with Grok AI using structured response format.
+    
+    Args:
+        document_text: The full text content of the document
+        query: User's specific instructions for analysis
+        api_key: xAI API key
+        
+    Returns:
+        Structured JSON response from Grok
+    """</span>
+    
+    <span class="python-comment"># Prepare API headers</span>
+    <span class="python-variable">headers</span> <span class="python-operator">=</span> <span class="python-bracket">{</span>
+        <span class="python-string">"Authorization"</span>: <span class="python-string">f"Bearer {api_key}"</span>,
+        <span class="python-string">"Content-Type"</span>: <span class="python-string">"application/json"</span>
+    <span class="python-bracket">}</span>
+    
+    <span class="python-comment"># Configure the API request with structured response format</span>
+    <span class="python-variable">data</span> <span class="python-operator">=</span> <span class="python-bracket">{</span>
+        <span class="python-string">"messages"</span>: [
+            {
+                <span class="python-string">"role"</span>: <span class="python-string">"system"</span>,
+                <span class="python-string">"content"</span>: <span class="python-string">"You are an expert analyst. Provide crisp, confident, and highly relevant insights. Focus only on substantive content that matters. Be informative but concise. Do not mention document metadata, formatting, or structural details. For titles, use the actual document title or subject matter directly - do not prefix with 'Summary of' or 'Analysis of'."</span>
+            },
+            {
+                <span class="python-string">"role"</span>: <span class="python-string">"user"</span>,
+                <span class="python-string">"content"</span>: <span class="python-string">f"""Analyze this content and respond to: {query}
+
+{document_text}
+
+Provide a focused analysis covering the most relevant and important points. Be direct and substantive."""</span>
+            }
+        ],
+        <span class="python-string">"model"</span>: <span class="python-string">"grok-3-mini-fast"</span>,
+        <span class="python-string">"stream"</span>: <span class="python-keyword">False</span>,
+        <span class="python-string">"max_tokens"</span>: <span class="python-number">4000</span>,
+        <span class="python-string">"temperature"</span>: <span class="python-number">0</span>,
+        <span class="python-string">"reasoning"</span>: {
+            <span class="python-string">"effort"</span>: <span class="python-string">"low"</span>
+        },
+        <span class="python-string">"response_format"</span>: {
+            <span class="python-string">"type"</span>: <span class="python-string">"json_schema"</span>,
+            <span class="python-string">"json_schema"</span>: {
+                <span class="python-string">"name"</span>: <span class="python-string">"document_analysis"</span>,
+                <span class="python-string">"strict"</span>: <span class="python-keyword">True</span>,
+                <span class="python-string">"schema"</span>: {
+                    <span class="python-string">"type"</span>: <span class="python-string">"object"</span>,
+                    <span class="python-string">"properties"</span>: {
+                        <span class="python-string">"title"</span>: {
+                            <span class="python-string">"type"</span>: <span class="python-string">"string"</span>,
+                            <span class="python-string">"description"</span>: <span class="python-string">"A concise title for the analysis. Do not prefix with 'Summary of' - just use the direct document title or subject matter."</span>
+                        },
+                        <span class="python-string">"executive_summary"</span>: {
+                            <span class="python-string">"type"</span>: <span class="python-string">"string"</span>,
+                            <span class="python-string">"description"</span>: <span class="python-string">"A brief executive summary of the key findings"</span>
+                        },
+                        <span class="python-string">"sections"</span>: {
+                            <span class="python-string">"type"</span>: <span class="python-string">"array"</span>,
+                            <span class="python-string">"items"</span>: {
+                                <span class="python-string">"type"</span>: <span class="python-string">"object"</span>,
+                                <span class="python-string">"properties"</span>: {
+                                    <span class="python-string">"heading"</span>: {
+                                        <span class="python-string">"type"</span>: <span class="python-string">"string"</span>,
+                                        <span class="python-string">"description"</span>: <span class="python-string">"Section heading/title"</span>
+                                    },
+                                    <span class="python-string">"content"</span>: {
+                                        <span class="python-string">"type"</span>: <span class="python-string">"string"</span>,
+                                        <span class="python-string">"description"</span>: <span class="python-string">"Detailed content for this section"</span>
+                                    }
+                                },
+                                <span class="python-string">"required"</span>: [<span class="python-string">"heading"</span>, <span class="python-string">"content"</span>],
+                                <span class="python-string">"additionalProperties"</span>: <span class="python-keyword">False</span>
+                            },
+                            <span class="python-string">"description"</span>: <span class="python-string">"Main analysis sections with headings and content"</span>
+                        },
+                        <span class="python-string">"key_insights"</span>: {
+                            <span class="python-string">"type"</span>: <span class="python-string">"array"</span>,
+                            <span class="python-string">"items"</span>: {
+                                <span class="python-string">"type"</span>: <span class="python-string">"string"</span>
+                            },
+                            <span class="python-string">"description"</span>: <span class="python-string">"List of key insights or takeaways"</span>
+                        },
+                        <span class="python-string">"recommendations"</span>: {
+                            <span class="python-string">"type"</span>: <span class="python-string">"array"</span>,
+                            <span class="python-string">"items"</span>: {
+                                <span class="python-string">"type"</span>: <span class="python-string">"string"</span>
+                            },
+                            <span class="python-string">"description"</span>: <span class="python-string">"Actionable recommendations"</span>
+                        }
+                    },
+                    <span class="python-string">"required"</span>: [<span class="python-string">"title"</span>, <span class="python-string">"executive_summary"</span>, <span class="python-string">"sections"</span>, <span class="python-string">"key_insights"</span>],
+                    <span class="python-string">"additionalProperties"</span>: <span class="python-keyword">False</span>
+                }
+            }
+        }
+    }
+    
+    <span class="python-keyword">try</span>:
+        <span class="python-class">logging</span>.<span class="python-function">info</span><span class="python-bracket">(</span><span class="python-string">"Starting Grok API request..."</span><span class="python-bracket">)</span>
+        
+        <span class="python-comment"># Make request to Grok API</span>
+        <span class="python-variable">response</span> <span class="python-operator">=</span> <span class="python-class">requests</span>.<span class="python-function">post</span><span class="python-bracket">(</span>
+            <span class="python-string">"https://api.x.ai/v1/chat/completions"</span>,
+            <span class="python-property">headers</span><span class="python-operator">=</span><span class="python-variable">headers</span>,
+            <span class="python-property">json</span><span class="python-operator">=</span><span class="python-variable">data</span>,
+            <span class="python-property">timeout</span><span class="python-operator">=</span><span class="python-number">900</span>  <span class="python-comment"># 15 minutes</span>
+        <span class="python-bracket">)</span>
+        
+        <span class="python-keyword">if</span> <span class="python-variable">response</span>.<span class="python-property">status_code</span> <span class="python-operator">!=</span> <span class="python-number">200</span>:
+            <span class="python-variable">error_msg</span> <span class="python-operator">=</span> <span class="python-string">f"Grok API error: {response.status_code} - {response.text}"</span>
+            <span class="python-class">logging</span>.<span class="python-function">error</span><span class="python-bracket">(</span><span class="python-variable">error_msg</span><span class="python-bracket">)</span>
+            <span class="python-keyword">raise</span> <span class="python-class">Exception</span><span class="python-bracket">(</span><span class="python-variable">error_msg</span><span class="python-bracket">)</span>
+        
+        <span class="python-comment"># Parse the response</span>
+        <span class="python-variable">response_data</span> <span class="python-operator">=</span> <span class="python-variable">response</span>.<span class="python-function">json</span><span class="python-bracket">(</span><span class="python-bracket">)</span>
+        <span class="python-class">logging</span>.<span class="python-function">info</span><span class="python-bracket">(</span><span class="python-string">"Received response from Grok API"</span><span class="python-bracket">)</span>
+        
+        <span class="python-keyword">if</span> <span class="python-string">'choices'</span> <span class="python-keyword">in</span> <span class="python-variable">response_data</span> <span class="python-keyword">and</span> <span class="python-function">len</span><span class="python-bracket">(</span><span class="python-variable">response_data</span><span class="python-bracket">[</span><span class="python-string">'choices'</span><span class="python-bracket">]</span><span class="python-bracket">)</span> <span class="python-operator">></span> <span class="python-number">0</span>:
+            <span class="python-variable">choice</span> <span class="python-operator">=</span> <span class="python-variable">response_data</span><span class="python-bracket">[</span><span class="python-string">'choices'</span><span class="python-bracket">]</span><span class="python-bracket">[</span><span class="python-number">0</span><span class="python-bracket">]</span>
+            
+            <span class="python-comment"># Handle reasoning content if present</span>
+            <span class="python-variable">reasoning_content</span> <span class="python-operator">=</span> <span class="python-variable">choice</span>.<span class="python-function">get</span><span class="python-bracket">(</span><span class="python-string">'message'</span>, <span class="python-bracket">{</span><span class="python-bracket">}</span><span class="python-bracket">)</span>.<span class="python-function">get</span><span class="python-bracket">(</span><span class="python-string">'reasoning_content'</span>, <span class="python-string">''</span><span class="python-bracket">)</span>
+            <span class="python-keyword">if</span> <span class="python-variable">reasoning_content</span>:
+                <span class="python-class">logging</span>.<span class="python-function">info</span><span class="python-bracket">(</span><span class="python-string">f"Reasoning content length: {len(reasoning_content)}"</span><span class="python-bracket">)</span>
+            
+            <span class="python-comment"># Get the structured response</span>
+            <span class="python-variable">structured_response</span> <span class="python-operator">=</span> <span class="python-variable">choice</span>.<span class="python-function">get</span><span class="python-bracket">(</span><span class="python-string">'message'</span>, <span class="python-bracket">{</span><span class="python-bracket">}</span><span class="python-bracket">)</span>.<span class="python-function">get</span><span class="python-bracket">(</span><span class="python-string">'content'</span>, <span class="python-string">''</span><span class="python-bracket">)</span>
+            
+            <span class="python-keyword">if</span> <span class="python-variable">structured_response</span>:
+                <span class="python-keyword">return</span> <span class="python-variable">structured_response</span>
+            <span class="python-keyword">else</span>:
+                <span class="python-keyword">raise</span> <span class="python-class">Exception</span><span class="python-bracket">(</span><span class="python-string">"No content in Grok API response"</span><span class="python-bracket">)</span>
+        <span class="python-keyword">else</span>:
+            <span class="python-keyword">raise</span> <span class="python-class">Exception</span><span class="python-bracket">(</span><span class="python-string">"Invalid response format from Grok API"</span><span class="python-bracket">)</span>
+            
+    <span class="python-keyword">except</span> <span class="python-class">requests</span>.<span class="python-class">exceptions</span>.<span class="python-class">Timeout</span>:
+        <span class="python-keyword">raise</span> <span class="python-class">Exception</span><span class="python-bracket">(</span><span class="python-string">"Grok API request timed out"</span><span class="python-bracket">)</span>
+    <span class="python-keyword">except</span> <span class="python-class">requests</span>.<span class="python-class">exceptions</span>.<span class="python-class">RequestException</span> <span class="python-keyword">as</span> <span class="python-variable">e</span>:
+        <span class="python-keyword">raise</span> <span class="python-class">Exception</span><span class="python-bracket">(</span><span class="python-string">f"Request failed: {str(e)}"</span><span class="python-bracket">)</span>
+
+
+<span class="python-comment"># Example usage</span>
+<span class="python-keyword">def</span> <span class="python-function">main</span><span class="python-bracket">(</span><span class="python-bracket">)</span>:
+    <span class="python-string">"""Example of how to use the Grok API integration."""</span>
+    
+    <span class="python-comment"># Sample document content</span>
+    <span class="python-variable">document_text</span> <span class="python-operator">=</span> <span class="python-string">"""
+    This is a sample business report that contains quarterly financial data,
+    market analysis, and strategic recommendations for the company's growth.
+    The document includes performance metrics, competitive analysis, and
+    future projections for the next fiscal year.
+    """</span>
+    
+    <span class="python-variable">query</span> <span class="python-operator">=</span> <span class="python-string">"Provide a comprehensive analysis of this business report"</span>
+    <span class="python-variable">api_key</span> <span class="python-operator">=</span> <span class="python-string">"your-xai-api-key-here"</span>
+    
+    <span class="python-keyword">try</span>:
+        <span class="python-function">print</span><span class="python-bracket">(</span><span class="python-string">"Starting document analysis..."</span><span class="python-bracket">)</span>
+        <span class="python-variable">result</span> <span class="python-operator">=</span> <span class="python-function">process_document_with_grok</span><span class="python-bracket">(</span>
+            <span class="python-property">document_text</span><span class="python-operator">=</span><span class="python-variable">document_text</span>,
+            <span class="python-property">query</span><span class="python-operator">=</span><span class="python-variable">query</span>,
+            <span class="python-property">api_key</span><span class="python-operator">=</span><span class="python-variable">api_key</span>
+        <span class="python-bracket">)</span>
+        
+        <span class="python-comment"># Parse the structured JSON response</span>
+        <span class="python-variable">analysis</span> <span class="python-operator">=</span> <span class="python-class">json</span>.<span class="python-function">loads</span><span class="python-bracket">(</span><span class="python-variable">result</span><span class="python-bracket">)</span>
+        
+        <span class="python-function">print</span><span class="python-bracket">(</span><span class="python-string">f"Title: {analysis['title']}"</span><span class="python-bracket">)</span>
+        <span class="python-function">print</span><span class="python-bracket">(</span><span class="python-string">f"Executive Summary: {analysis['executive_summary']}"</span><span class="python-bracket">)</span>
+        <span class="python-function">print</span><span class="python-bracket">(</span><span class="python-string">f"Number of sections: {len(analysis['sections'])}"</span><span class="python-bracket">)</span>
+        <span class="python-function">print</span><span class="python-bracket">(</span><span class="python-string">f"Key insights: {len(analysis['key_insights'])}"</span><span class="python-bracket">)</span>
+        
+    <span class="python-keyword">except</span> <span class="python-class">Exception</span> <span class="python-keyword">as</span> <span class="python-variable">e</span>:
+        <span class="python-function">print</span><span class="python-bracket">(</span><span class="python-string">f"Error: {str(e)}"</span><span class="python-bracket">)</span>
+
+
+<span class="python-keyword">if</span> <span class="python-variable">__name__</span> <span class="python-operator">==</span> <span class="python-string">"__main__"</span>:
+    <span class="python-function">main</span><span class="python-bracket">(</span><span class="python-bracket">)</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Security and Privacy</h3>
+                <p>xOverwatch enforces HTTP/3 with TLS 1.3. Why HTTP/3? Connections are established faster, it eliminates head-of-line blocking, and its real-time bidirectional communication enables smoother token delivery, even on less reliable networks.</p>
+                
+                <div class="warning">
+                    <div class="warning-title">🔒 Security Features</div>
+                    <ul>
+                        <li>Never trains on API inputs/outputs without explicit consent</li>
+                        <li>xAI is SOC 2 Type II compliant</li>
+                        <li>Authentication and granular access control</li>
+                        <li>Enforces HTTP/3 with Transport Layer Security (TLS 1.3)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="doc-section" id="http-protocol">
+                <h2>HTTP Protocol</h2>
+                
+                <p>xOverwatch leverages external API endpoints to make requests to xAI's Grok API for document summarization and Google's Gemini API for LLM-as-a-Judge evaluation. You can restrict internet access to these endpoints using a NAT Gateway, but organizations operating in air-gapped environments physically isolated from the internet may want to consider utilizing frozen model weights and localized fine-tuning.</p>
+                
+                <h3>HTTP Methods Used:</h3>
+                <table class="http-table">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Usage in xOverwatch</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="http-method">GET</span></td>
+                            <td>Retrieve document summaries, evaluation results, and application data. No side effects or data modification.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="http-method">POST</span></td>
+                            <td>Upload files, submit documents for summarization, and run evaluation metrics. Creates new resources and processes data.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Relevant Status Codes:</h3>
+                <p>You may potentially encounter the following status codes while using xOverwatch:</p>
+                <table class="http-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="status-category">2xx Successful</span></td>
+                            <td><span class="http-status">200</span></td>
+                            <td>OK</td>
+                            <td>Successful file upload, data retrieval, or API request completion.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-category">4xx Client Error</span></td>
+                            <td><span class="http-status">400</span></td>
+                            <td>Bad Request</td>
+                            <td>Invalid file format, missing parameters, or malformed request syntax.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-category">4xx Client Error</span></td>
+                            <td><span class="http-status">404</span></td>
+                            <td>Not Found</td>
+                            <td>Summary or requested resource could not be found on the server.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-category">4xx Client Error</span></td>
+                            <td><span class="http-status">429</span></td>
+                            <td>Too Many Requests</td>
+                            <td>Rate limiting from xAI API due to too many requests in a given timeframe.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-category">5xx Server Error</span></td>
+                            <td><span class="http-status">500</span></td>
+                            <td>Internal Server Error</td>
+                            <td>API key issues, processing failures, or unexpected server conditions.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="doc-section" id="metrics">
+                <h2>Evaluation Metrics</h2>
+                <p>xOverwatch provides advanced evaluation metrics to assess the quality and accuracy of generated summaries and responses. Each metric offers unique insights into different aspects of text quality:</p>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-type-badge">Semantic</div>
+                        <div class="metric-header">
+                            <div>
+                                <h3 class="metric-title"><span style="color: #F19E38;">BERT Score</span><span class="metric-acronym">BERTS</span></h3>
+                            </div>
+                        </div>
+                        <p class="metric-description">Leverages pre-trained BERT embeddings to evaluate semantic similarity between generated and reference texts. Captures contextual meaning beyond traditional n-gram matching.</p>
+                        <ul class="metric-features">
+                            <li>Contextual understanding</li>
+                            <li>Paraphrase detection</li>
+                            <li>Semantic fidelity measurement</li>
+                            <li>Language model embeddings</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-type-badge">Precision</div>
+                        <div class="metric-header">
+                            <div>
+                                <h3 class="metric-title"><span style="color: #F19E38;">BLEU Score</span><span class="metric-acronym">BLEU</span></h3>
+                            </div>
+                        </div>
+                        <p class="metric-description">Measures precision of n-grams between generated and reference texts with brevity penalty. Originally designed for machine translation, focuses on exact word matches.</p>
+                        <ul class="metric-features">
+                            <li>N-gram precision analysis</li>
+                            <li>Exact word matching</li>
+                            <li>Brevity penalty inclusion</li>
+                            <li>Lexical similarity scoring</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-type-badge">Recall</div>
+                        <div class="metric-header">
+                            <div>
+                                <h3 class="metric-title"><span style="color: #F19E38;">ROUGE Score</span><span class="metric-acronym">ROUGE</span></h3>
+                            </div>
+                        </div>
+                        <p class="metric-description">Recall-oriented evaluation measuring overlap of n-grams, word sequences, and pairs. Includes ROUGE-N, ROUGE-L, and ROUGE-S variants for comprehensive coverage assessment.</p>
+                        <ul class="metric-features">
+                            <li>Content coverage analysis</li>
+                            <li>Multiple variant options</li>
+                            <li>Longest common subsequence</li>
+                            <li>Summarization optimization</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-type-badge">Balanced</div>
+                        <div class="metric-header">
+                            <div>
+                                <h3 class="metric-title"><span style="color: #F19E38;">METEOR Score</span><span class="metric-acronym">METEOR</span></h3>
+                            </div>
+                        </div>
+                        <p class="metric-description">Combines precision and recall with stemming, synonymy, and paraphrase matching for semantic equivalence and flexible word order evaluation.</p>
+                        <ul class="metric-features">
+                            <li>Precision-recall balance</li>
+                            <li>Synonym recognition</li>
+                            <li>Flexible word ordering</li>
+                            <li>Human judgment correlation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-type-badge">AI-Powered</div>
+                        <div class="metric-header">
+                            <div>
+                                <h3 class="metric-title"><span style="color: #F19E38;">LLM as a Judge</span><span class="metric-acronym">LLMJ</span></h3>
+                            </div>
+                        </div>
+                        <p class="metric-description">Uses large language models as assessors. Provides customizable quality assessments with explanatory feedback across multiple criteria.</p>
+                        <ul class="metric-features">
+                            <li>Multi-criteria evaluation</li>
+                            <li>Contextual understanding</li>
+                            <li>Explanatory feedback</li>
+                            <li>Adaptive assessment</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-type-badge">Guide</div>
+                        <div class="metric-header">
+                            <div>
+                                <h3 class="metric-title">Usage Recommendations</h3>
+                            </div>
+                        </div>
+                        <p class="metric-description">Select the optimal evaluation metric based on your specific use case and quality assessment requirements.</p>
+                        <ul class="metric-features">
+                            <li><strong style="color: #E8EBF7;">BERTScore:</strong> Semantic similarity w/ IDF</li>
+                            <li><strong style="color: #E8EBF7;">BLEU:</strong> Translation benchmarking</li>
+                            <li><strong style="color: #E8EBF7;">ROUGE:</strong> Summarization and coverage</li>
+                            <li><strong style="color: #E8EBF7;">METEOR:</strong> Synonyms and stemming</li>
+                            <li><strong style="color: #E8EBF7;">LLMJ:</strong> Tunable contextual scoring</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 30px;">LLM as a Judge Implementation</h3>
+                <p>xOverwatch implements LLM as a Judge evaluation using Google's Gemini API as the scoring engine. This approach leverages the advanced reasoning capabilities of large language models to provide comprehensive quality assessments.</p>
+                
+                <div class="warning" style="margin: 20px 0;">
+                    <div class="warning-title" style="color: white; font-weight: 700;">Implementation Process</div>
+                    <ul>
+                        <li><strong style="color: #F19E38;">Input Preparation:</strong> The system prepares three key components for evaluation</li>
+                        <li><strong style="color: #F19E38;">Original Document:</strong> The source text that was summarized by Grok</li>
+                        <li><strong style="color: #F19E38;">Generated Summary:</strong> The output produced by Grok's summarization process</li>
+                        <li><strong style="color: #F19E38;">User Guidelines:</strong> Any specific evaluation criteria or instructions provided by the user</li>
+                    </ul>
+                </div>
+                
+                <p>Gemini receives a structured prompt containing the original document, Grok's generated summary, and user-defined evaluation guidelines. Gemini then analyzes the candidate text (summary) against the reference text (document), considering pre-specified evaluation metrics appended to the prompt such as [1] <strong style="color: #ffffff; font-weight: 700;">Accuracy</strong>: how well the summary captures the factual content of the original document [2] <strong style="color: #ffffff; font-weight: 700;">Coverage</strong>: whether key information and main points are adequately covered [3] <strong style="color: #ffffff; font-weight: 700;">Clarity</strong>: logical flow and readability of the generated summary. [4] <strong style="color: #ffffff; font-weight: 700;">Relevance</strong>: focus on important content while filtering out less critical details. [5] <strong style="color: #ffffff; font-weight: 700;">User Criteria</strong>: custom evaluation parameters specified in the user prompt.</p>
+                
+                <p>I then instruct Gemini in the prompt to assign a detailed evaluation score from 1 to 10, with explanatory feedback, providing both quantitative metrics and qualitative insights into the summary's strengths and areas for improvement. This contextual assessment could be expanded even further through localized fine-tuning and custom instructions.</p>
+                
+                <h3>Implementation Code</h3>
+                <p>The following code demonstrates the complete LLMJ scoring system used in xOverwatch:</p>
+                
+                <div class="gist-embed">
+                    <div class="gist-meta">
+                        <i class="fab fa-github"></i> nl-alonso/xoverwatch-llmj-scoring
+                    </div>
+                    <div class="gist-file">
+                        <div class="gist-file-header">
+                            <i class="far fa-file-code"></i> llmj_scoring_implementation.py
+                            <button class="copy-button" onclick="copyCodeBlock(this)" title="Copy to clipboard">
+                                <svg class="copy-icon" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-8.5A1.75 1.75 0 0 1 4 13.25V1.75zm1.75-.25a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H5.75z"/>
+                                    <path d="M1.75 3A1.75 1.75 0 0 0 0 4.75v8.5C0 14.216.784 15 1.75 15H7v-1.5H1.75a.25.25 0 0 1-.25-.25v-8.5a.25.25 0 0 1 .25-.25H7V3H1.75z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="gist-file-content" data-start="1">
+                            <pre><code><span class="python-string">"""
+xOverwatch LLMJ (LLM as a Judge) Scoring Implementation
+
+This module demonstrates how xOverwatch uses Google's Gemini API to evaluate 
+the quality of AI-generated summaries against original documents.
+"""</span>
+
+<span class="python-keyword">import</span> <span class="python-class">json</span>
+<span class="python-keyword">import</span> <span class="python-class">boto3</span>
+<span class="python-keyword">import</span> <span class="python-class">logging</span>
+<span class="python-keyword">import</span> <span class="python-class">os</span>
+<span class="python-keyword">from</span> <span class="python-class">typing</span> <span class="python-keyword">import</span> <span class="python-class">Dict</span>, <span class="python-class">Any</span>, <span class="python-class">Optional</span>
+<span class="python-keyword">import</span> <span class="python-class">google</span>.<span class="python-class">generativeai</span> <span class="python-keyword">as</span> <span class="python-class">genai</span>
+
+<span class="python-variable">logger</span> <span class="python-operator">=</span> <span class="python-class">logging</span>.<span class="python-function">getLogger</span><span class="python-bracket">(</span><span class="python-variable">__name__</span><span class="python-bracket">)</span>
+
+<span class="python-keyword">def</span> <span class="python-function">get_google_api_key</span>():
+    <span class="python-string">"""
+    Retrieve Google API key from AWS Secrets Manager.
+    Falls back to environment variable for local development.
+    """</span>
+    <span class="python-keyword">try</span>:
+        <span class="python-comment"># Try to get from AWS Secrets Manager first</span>
+        <span class="python-variable">session</span> <span class="python-operator">=</span> <span class="python-class">boto3</span>.<span class="python-class">Session</span><span class="python-bracket">(</span><span class="python-bracket">)</span>
+        <span class="python-variable">client</span> <span class="python-operator">=</span> <span class="python-variable">session</span>.<span class="python-function">client</span><span class="python-bracket">(</span><span class="python-string">'secretsmanager'</span>, <span class="python-property">region_name</span><span class="python-operator">=</span><span class="python-string">'us-east-1'</span><span class="python-bracket">)</span>
+        
+        <span class="python-variable">response</span> <span class="python-operator">=</span> <span class="python-variable">client</span>.<span class="python-function">get_secret_value</span><span class="python-bracket">(</span><span class="python-property">SecretId</span><span class="python-operator">=</span><span class="python-string">'google-api-key'</span><span class="python-bracket">)</span>
+        <span class="python-keyword">return</span> <span class="python-variable">response</span><span class="python-bracket">[</span><span class="python-string">'SecretString'</span><span class="python-bracket">]</span>
+    <span class="python-keyword">except</span> <span class="python-class">Exception</span> <span class="python-keyword">as</span> <span class="python-variable">e</span>:
+        <span class="python-variable">logger</span>.<span class="python-function">warning</span><span class="python-bracket">(</span><span class="python-string">f"Could not retrieve API key from Secrets Manager: {e}"</span><span class="python-bracket">)</span>
+        <span class="python-comment"># Fall back to environment variable for local development</span>
+        <span class="python-variable">api_key</span> <span class="python-operator">=</span> <span class="python-class">os</span>.<span class="python-function">getenv</span><span class="python-bracket">(</span><span class="python-string">"GOOGLE_API_KEY"</span><span class="python-bracket">)</span>
+        <span class="python-keyword">if</span> <span class="python-keyword">not</span> <span class="python-variable">api_key</span>:
+            <span class="python-keyword">raise</span> <span class="python-class">ValueError</span><span class="python-bracket">(</span><span class="python-string">"Google API key not found in Secrets Manager or environment variables"</span><span class="python-bracket">)</span>
+        <span class="python-keyword">return</span> <span class="python-variable">api_key</span>
+
+<span class="python-keyword">def</span> <span class="python-function">evaluate_summary</span>(document: <span class="python-class">str</span>, summary: <span class="python-class">str</span>, api_key: <span class="python-class">str</span> = <span class="python-keyword">None</span>, user_instructions: <span class="python-class">str</span> = <span class="python-keyword">None</span>) -> Dict[<span class="python-class">str</span>, Any]:
+    <span class="python-string">"""
+    Evaluates the quality of a summary for a given document using Gemini LLM.
+    
+    Args:
+        document: The original document text
+        summary: The summary to evaluate
+        api_key: Google API key (optional, will fetch from secrets if not provided)
+        user_instructions: Additional instructions from user (optional)
+    
+    Returns:
+        Dictionary containing evaluation scores and feedback
+    """</span>
+    <span class="python-keyword">try</span>:
+        <span class="python-keyword">if</span> <span class="python-keyword">not</span> <span class="python-variable">api_key</span>:
+            <span class="python-variable">api_key</span> <span class="python-operator">=</span> <span class="python-function">get_google_api_key</span><span class="python-bracket">(</span><span class="python-bracket">)</span>
+        
+        <span class="python-comment"># Configure Gemini</span>
+        <span class="python-class">genai</span>.<span class="python-function">configure</span><span class="python-bracket">(</span><span class="python-property">api_key</span><span class="python-operator">=</span><span class="python-variable">api_key</span><span class="python-bracket">)</span>
+        <span class="python-variable">model</span> <span class="python-operator">=</span> <span class="python-class">genai</span>.<span class="python-class">GenerativeModel</span><span class="python-bracket">(</span><span class="python-string">'gemini-2.5-flash-lite-preview-06-17'</span><span class="python-bracket">)</span>
+        
+        <span class="python-comment"># Build the evaluation prompt</span>
+        <span class="python-variable">base_prompt</span> <span class="python-operator">=</span> <span class="python-string">f"""
+            You are an expert document analyst. Please evaluate the quality of this summary based on the original document.
+
+            ORIGINAL DOCUMENT:
+            {document}
+
+            SUMMARY TO EVALUATE:
+            {summary}
+
+            Please evaluate the summary on these criteria and provide scores from 1-10:
+
+            1. ACCURACY: How factually correct is the summary compared to the original?
+            2. CONCISENESS: How well does it capture key points without unnecessary details?
+            3. COVERAGE: How comprehensively does it cover the main topics?
+            4. CLARITY: How clear and well-written is the summary?
+
+            """</span>
+        
+        <span class="python-keyword">if</span> <span class="python-variable">user_instructions</span>:
+            <span class="python-variable">base_prompt</span> <span class="python-operator">+=</span> <span class="python-string">f"\nADDITIONAL EVALUATION CRITERIA:\n{user_instructions}\n"</span>
+        
+        <span class="python-variable">base_prompt</span> <span class="python-operator">+=</span> <span class="python-string">"""
+Please respond in this exact JSON format:
+{
+    "accuracy": <score 1-10>,
+    "conciseness": <score 1-10>, 
+    "coverage": <score 1-10>,
+    "clarity": <score 1-10>,
+    "overall_score": <average of above scores>,
+    "feedback": "<detailed explanation of strengths and weaknesses>",
+    "suggestions": "<specific suggestions for improvement>"
+}
+"""</span>
+        
+        <span class="python-comment"># Get evaluation from Gemini</span>
+        <span class="python-variable">response</span> <span class="python-operator">=</span> <span class="python-variable">model</span>.<span class="python-function">generate_content</span><span class="python-bracket">(</span><span class="python-variable">base_prompt</span><span class="python-bracket">)</span>
+        <span class="python-variable">response_text</span> <span class="python-operator">=</span> <span class="python-variable">response</span>.<span class="python-property">text</span>.<span class="python-function">strip</span><span class="python-bracket">(</span><span class="python-bracket">)</span>
+        
+        <span class="python-comment"># Parse JSON response</span>
+        <span class="python-keyword">try</span>:
+            <span class="python-comment"># Extract JSON from response (in case there's extra text)</span>
+            <span class="python-variable">start_idx</span> <span class="python-operator">=</span> <span class="python-variable">response_text</span>.<span class="python-function">find</span><span class="python-bracket">(</span><span class="python-string">'{'</span><span class="python-bracket">)</span>
+            <span class="python-variable">end_idx</span> <span class="python-operator">=</span> <span class="python-variable">response_text</span>.<span class="python-function">rfind</span><span class="python-bracket">(</span><span class="python-string">'}'</span><span class="python-bracket">)</span> <span class="python-operator">+</span> <span class="python-number">1</span>
+            
+            <span class="python-keyword">if</span> <span class="python-variable">start_idx</span> <span class="python-operator">==</span> <span class="python-operator">-</span><span class="python-number">1</span> <span class="python-keyword">or</span> <span class="python-variable">end_idx</span> <span class="python-operator">==</span> <span class="python-number">0</span>:
+                <span class="python-keyword">raise</span> <span class="python-class">ValueError</span><span class="python-bracket">(</span><span class="python-string">"No JSON found in response"</span><span class="python-bracket">)</span>
+                
+            <span class="python-variable">json_str</span> <span class="python-operator">=</span> <span class="python-variable">response_text</span><span class="python-bracket">[</span><span class="python-variable">start_idx</span>:<span class="python-variable">end_idx</span><span class="python-bracket">]</span>
+            <span class="python-variable">evaluation</span> <span class="python-operator">=</span> <span class="python-class">json</span>.<span class="python-function">loads</span><span class="python-bracket">(</span><span class="python-variable">json_str</span><span class="python-bracket">)</span>
+            
+            <span class="python-comment"># Validate required fields</span>
+            <span class="python-variable">required_fields</span> <span class="python-operator">=</span> <span class="python-bracket">[</span><span class="python-string">'accuracy'</span>, <span class="python-string">'conciseness'</span>, <span class="python-string">'coverage'</span>, <span class="python-string">'clarity'</span>, <span class="python-string">'overall_score'</span>, <span class="python-string">'feedback'</span><span class="python-bracket">]</span>
+            <span class="python-keyword">for</span> <span class="python-variable">field</span> <span class="python-keyword">in</span> <span class="python-variable">required_fields</span>:
+                <span class="python-keyword">if</span> <span class="python-variable">field</span> <span class="python-keyword">not</span> <span class="python-keyword">in</span> <span class="python-variable">evaluation</span>:
+                    <span class="python-keyword">raise</span> <span class="python-class">ValueError</span><span class="python-bracket">(</span><span class="python-string">f"Missing required field: {field}"</span><span class="python-bracket">)</span>
+            
+            <span class="python-keyword">return</span> <span class="python-variable">evaluation</span>
+            
+        <span class="python-keyword">except</span> <span class="python-bracket">(</span><span class="python-class">json</span>.<span class="python-class">JSONDecodeError</span>, <span class="python-class">ValueError</span><span class="python-bracket">)</span> <span class="python-keyword">as</span> <span class="python-variable">e</span>:
+            <span class="python-variable">logger</span>.<span class="python-function">warning</span><span class="python-bracket">(</span><span class="python-string">f"Failed to parse JSON response: {e}"</span><span class="python-bracket">)</span>
+            <span class="python-variable">logger</span>.<span class="python-function">warning</span><span class="python-bracket">(</span><span class="python-string">f"Raw response: {response_text}"</span><span class="python-bracket">)</span>
+            
+            <span class="python-comment"># Fallback: create a basic evaluation</span>
+            <span class="python-keyword">return</span> <span class="python-bracket">{</span>
+                <span class="python-string">"accuracy"</span>: <span class="python-number">7</span>,
+                <span class="python-string">"conciseness"</span>: <span class="python-number">7</span>,
+                <span class="python-string">"coverage"</span>: <span class="python-number">7</span>,
+                <span class="python-string">"clarity"</span>: <span class="python-number">7</span>,
+                <span class="python-string">"overall_score"</span>: <span class="python-number">7.0</span>,
+                <span class="python-string">"feedback"</span>: <span class="python-string">f"Evaluation completed but response parsing failed. Raw AI response: {response_text[:500]}..."</span>,
+                <span class="python-string">"suggestions"</span>: <span class="python-string">"Please try the evaluation again."</span>
+            <span class="python-bracket">}</span>
+            
+    <span class="python-keyword">except</span> <span class="python-class">Exception</span> <span class="python-keyword">as</span> <span class="python-variable">e</span>:
+        <span class="python-variable">logger</span>.<span class="python-function">error</span><span class="python-bracket">(</span><span class="python-string">f"Error in evaluate_summary: {str(e)}"</span><span class="python-bracket">)</span>
+        <span class="python-keyword">raise</span> <span class="python-variable">e</span>
+
+<span class="python-comment"># Example usage</span>
+<span class="python-keyword">if</span> <span class="python-variable">__name__</span> <span class="python-operator">==</span> <span class="python-string">"__main__"</span>:
+    <span class="python-comment"># Sample document and summary for testing</span>
+    <span class="python-variable">sample_document</span> <span class="python-operator">=</span> <span class="python-string">"""
+    Artificial Intelligence (AI) has revolutionized numerous industries and continues to shape the future 
+    of technology. Machine learning algorithms enable computers to learn from data without explicit programming, 
+    while deep learning networks mimic the human brain's neural connections. Natural language processing allows 
+    machines to understand and generate human language, powering chatbots and translation services. Computer 
+    vision enables machines to interpret visual information, revolutionizing autonomous vehicles and medical 
+    imaging. As AI technology advances, ethical considerations around bias, privacy, and job displacement 
+    become increasingly important for responsible development and deployment.
+    """</span>
+    
+    <span class="python-variable">sample_summary</span> <span class="python-operator">=</span> <span class="python-string">"""
+    AI has transformed multiple industries through machine learning, deep learning, natural language processing, 
+    and computer vision technologies. These advances enable automated learning, human-like text generation, 
+    and visual recognition capabilities. However, ethical concerns about bias, privacy, and employment impact 
+    must be addressed for responsible AI development.
+    """</span>
+    
+    <span class="python-keyword">try</span>:
+        <span class="python-variable">evaluation</span> <span class="python-operator">=</span> <span class="python-function">evaluate_summary</span><span class="python-bracket">(</span><span class="python-variable">sample_document</span>, <span class="python-variable">sample_summary</span><span class="python-bracket">)</span>
+        <span class="python-function">print</span><span class="python-bracket">(</span><span class="python-string">f"Overall Score: {evaluation['overall_score']}"</span><span class="python-bracket">)</span>
+        <span class="python-function">print</span><span class="python-bracket">(</span><span class="python-string">f"Feedback: {evaluation['feedback']}"</span><span class="python-bracket">)</span>
+    <span class="python-keyword">except</span> <span class="python-class">Exception</span> <span class="python-keyword">as</span> <span class="python-variable">e</span>:
+        <span class="python-function">print</span><span class="python-bracket">(</span><span class="python-string">f"Error: {str(e)}"</span><span class="python-bracket">)</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="doc-section" id="api-management">
+                <h2>API Management</h2>
+                <p>APIs are a primary attack surface for LLMs. Consider expanding your security posture to protect the model from manipulation, the training data from exfiltration, and the underlying computational resources from abuse.</p>
+                
+                <div class="warning">
+                    <div class="warning-title">Security Warning</div>
+                    <p>Never hardcode API keys in production. Use a Secrets Manager or environment variables.</p>
+                </div>
+                
+                <h3 style="margin-top: 40px;">Prompt Injection via API Endpoints</h3>
+                <p>Prompt injection has been recognized by OWASP as the top vulnerability for LLM applications. It occurs when an attacker crafts input that causes the LLM to ignore its intended instructions and instead execute a malicious directive provided by the attacker. Any API endpoint that accepts user-generated text and passes it to an LLM is a direct vector for this attack.</p>
+                
+                <div class="defense-strategies-container">
+                    <h4 class="defense-header">Defensive API Design Strategies</h4>
+                    <div class="strategies-content">
+                        <div class="strategy-item">
+                            <h5 class="strategy-name">Input Sanitization and Filtering</h5>
+                            <p class="strategy-desc">Treats all user inputs as untrusted, and first validates them against format constraints, length limits, and known malicious patterns (e.g., via regex, signature-based filters, or ML classifiers), then sanitizes them by stripping harmful content like executable code or override instructions before they reach the model. Can include context-aware filtering and output encoding for added resilience. Effectively blocks obvious exploits with low overhead but necessitates continuous updates to address evolving evasion tactics and avoid false positives.</p>
+                        </div>
+                        
+                        <div class="strategy-item">
+                            <h5 class="strategy-name">Multi-Agent Defense Architecture</h5>
+                            <p class="strategy-desc">Adopts a zero-trust framework with strong authentication, fine-grained authorization, micro-segmentation, and encrypted communications. In practice, you would route prompts through a defensive chain of specialized models, such as first directing API calls to a sanitizer agent (e.g., a dedicated LLM or classifier) to detect and neutralize injection attempts via ethical scoring or metadata embedding, then pass safe inputs to the main generator agent for response creation, with further layers like policy enforcers or output filters for layered protection.</p>
+                        </div>
+                        
+                        <div class="strategy-item">
+                            <h5 class="strategy-name">Polymorphic Prompt Assembling (PPA)</h5>
+                            <p class="strategy-desc">Polymorphic Prompt Assembling (PPA) can serve as a great defensive measure for LLMs by randomizing the structure of assembled prompts, combining system instructions, user inputs, and data, with dynamically selected separator pairs (e.g., unique tags) to isolate malicious user content. This unpredictability thwarts prompt injection attacks, where adversaries attempt to override instructions via crafted inputs, achieving high defense rates (>98%) with minimal overhead and no need for model retraining.</p>
+                        </div>
+                        
+                        <div class="strategy-item">
+                            <h5 class="strategy-name">Resource and Complexity Limiting</h5>
+                            <p class="strategy-desc">Defends against denial-of-service and exploitation attacks by enforcing constraints on computational demands, such as rate limiting API requests, capping input/output token lengths, monitoring queue sizes for efficient load handling, and applying least privilege principles to restrict access to sensitive resources or external functions. This approach minimizes the feasibility of resource-intensive or intricate malicious prompts and enhances resilience with minimal performance costs. This can be used alongside popular first party services such as WAF.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Data Poisoning via Data Ingestion APIs</h3>
+                <p>Data poisoning attacks aim to corrupt a model's training data to degrade its overall performance or, more insidiously, to create targeted "backdoors" that can be triggered by an attacker at inference time. If xAI uses APIs to ingest data from external sources for training or fine-tuning its models, these APIs become critical vectors for poisoning attacks.</p>
+                
+                <h3>Model Inference and Extraction Attacks via APIs</h3>
+                <p>This class of attacks aims to extract information about the model or its training data. Membership Inference Attacks (MIAs), for example, attempt to determine if a specific data record was part of the model's training set. These attacks often rely on analyzing the model's confidence scores or output probabilities for a given input, with the assumption that the model will exhibit higher confidence for data it has seen during training.</p>
+            </div>
+
+            <div class="doc-section" id="aws-deployment">
+                <h2>Deploy with Terraform</h2>
+                <p>Deploy the complete xOverwatch infrastructure on AWS using Terraform. This configuration includes all the actual resources used in this project:</p>
+                
+                <div class="gist-embed">
+                    <div class="gist-meta">
+                        <i class="fab fa-github"></i> xOverwatch Complete AWS Infrastructure
+                    </div>
+                    <div class="gist-file">
+                        <div class="gist-file-header">
+                            <i class="far fa-file-code"></i> main.tf
+                            <button class="copy-button" onclick="copyCodeBlock(this)" title="Copy to clipboard">
+                                <svg class="copy-icon" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-8.5A1.75 1.75 0 0 1 4 13.25V1.75zm1.75-.25a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H5.75z"/>
+                                    <path d="M1.75 3A1.75 1.75 0 0 0 0 4.75v8.5C0 14.216.784 15 1.75 15H7v-1.5H1.75a.25.25 0 0 1-.25-.25v-8.5a.25.25 0 0 1 .25-.25H7V3H1.75z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="gist-file-content" data-start="1">
+                            <pre><code><span class="python-comment"># xOverwatch AWS Infrastructure</span>
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+<span class="python-comment"># 1. Provider and Variables</span>
+<span class="python-comment">#</span>
+<span class="python-comment"># Configure Terraform providers, version constraints, AWS provider settings,</span>
+<span class="python-comment"># and define all input variables for the infrastructure deployment.</span>
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+
+<span class="python-keyword">terraform</span> {
+  <span class="python-keyword">required_version</span> = <span class="python-string">">= 1.0"</span>
+  <span class="python-keyword">required_providers</span> {
+    <span class="python-keyword">aws</span> = {
+      <span class="python-keyword">source</span>  = <span class="python-string">"hashicorp/aws"</span>
+      <span class="python-keyword">version</span> = <span class="python-string">"~> 5.0"</span>
+    }
+    <span class="python-keyword">archive</span> = {
+      <span class="python-keyword">source</span>  = <span class="python-string">"hashicorp/archive"</span>
+      <span class="python-keyword">version</span> = <span class="python-string">"~> 2.4"</span>
+    }
+  }
+}
+
+<span class="python-keyword">provider</span> <span class="python-string">"aws"</span> {
+  <span class="python-keyword">region</span> = <span class="python-function">var.aws_region</span>
+
+  <span class="python-keyword">default_tags</span> {
+    <span class="python-keyword">tags</span> = {
+      <span class="python-keyword">Project</span>     = <span class="python-string">"xOverwatch"</span>
+      <span class="python-keyword">Environment</span> = <span class="python-function">var.environment</span>
+      <span class="python-keyword">ManagedBy</span>   = <span class="python-string">"Terraform"</span>
+    }
+  }
+}
+
+<span class="python-comment"># Data sources</span>
+<span class="python-keyword">data</span> <span class="python-string">"aws_caller_identity"</span> <span class="python-string">"current"</span> {}
+<span class="python-keyword">data</span> <span class="python-string">"aws_region"</span> <span class="python-string">"current"</span> {}
+
+<span class="python-comment"># Variables</span>
+<span class="python-keyword">variable</span> <span class="python-string">"aws_region"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"AWS region"</span>
+  <span class="python-keyword">type</span>        = <span class="python-class">string</span>
+  <span class="python-keyword">default</span>     = <span class="python-string">"us-east-1"</span>
+}
+
+<span class="python-keyword">variable</span> <span class="python-string">"environment"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"Environment name"</span>
+  <span class="python-keyword">type</span>        = <span class="python-class">string</span>
+  <span class="python-keyword">default</span>     = <span class="python-string">"prod"</span>
+}
+
+<span class="python-keyword">variable</span> <span class="python-string">"project_name"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"Project name"</span>
+  <span class="python-keyword">type</span>        = <span class="python-class">string</span>
+  <span class="python-keyword">default</span>     = <span class="python-string">"xoverwatch"</span>
+}
+
+<span class="python-keyword">variable</span> <span class="python-string">"uploads_bucket_name"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"Name of the S3 bucket for file uploads"</span>
+  <span class="python-keyword">type</span>        = <span class="python-class">string</span>
+  <span class="python-keyword">default</span>     = <span class="python-string">"xoverwatch-app-uploads"</span>
+}
+
+<span class="python-keyword">variable</span> <span class="python-string">"frontend_bucket_name"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"Name of the S3 bucket for frontend hosting"</span>
+  <span class="python-keyword">type</span>        = <span class="python-class">string</span>
+  <span class="python-keyword">default</span>     = <span class="python-string">"xoverwatch-frontend"</span>
+}
+
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+<span class="python-comment"># 2. S3 Storage</span>
+<span class="python-comment">#</span>
+<span class="python-comment"># Creates secure S3 buckets for file uploads and frontend hosting with</span>
+<span class="python-comment"># encryption, versioning, CORS, and public access controls.</span>
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+
+<span class="python-comment"># S3 bucket for file uploads with encryption and security</span>
+<span class="python-keyword">resource</span> <span class="python-string">"aws_s3_bucket"</span> <span class="python-string">"uploads"</span> {
+  <span class="python-keyword">bucket</span> = <span class="python-function">var.uploads_bucket_name</span>
+
+  <span class="python-keyword">tags</span> = {
+    <span class="python-keyword">Name</span> = <span class="python-string">"xOverwatch Uploads Bucket"</span>
+    <span class="python-keyword">Type</span> = <span class="python-string">"uploads"</span>
+  }
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_s3_bucket_versioning"</span> <span class="python-string">"uploads"</span> {
+  <span class="python-keyword">bucket</span> = <span class="python-function">aws_s3_bucket.uploads.id</span>
+  <span class="python-keyword">versioning_configuration</span> {
+    <span class="python-keyword">status</span> = <span class="python-string">"Enabled"</span>
+  }
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_s3_bucket_server_side_encryption_configuration"</span> <span class="python-string">"uploads"</span> {
+  <span class="python-keyword">bucket</span> = <span class="python-function">aws_s3_bucket.uploads.id</span>
+
+  <span class="python-keyword">rule</span> {
+    <span class="python-keyword">apply_server_side_encryption_by_default</span> {
+      <span class="python-keyword">sse_algorithm</span> = <span class="python-string">"AES256"</span>
+    }
+  }
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_s3_bucket_public_access_block"</span> <span class="python-string">"uploads"</span> {
+  <span class="python-keyword">bucket</span> = <span class="python-function">aws_s3_bucket.uploads.id</span>
+
+  <span class="python-keyword">block_public_acls</span>       = <span class="python-class">true</span>
+  <span class="python-keyword">block_public_policy</span>     = <span class="python-class">true</span>
+  <span class="python-keyword">ignore_public_acls</span>      = <span class="python-class">true</span>
+  <span class="python-keyword">restrict_public_buckets</span> = <span class="python-class">true</span>
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_s3_bucket_cors_configuration"</span> <span class="python-string">"uploads"</span> {
+  <span class="python-keyword">bucket</span> = <span class="python-function">aws_s3_bucket.uploads.id</span>
+
+  <span class="python-keyword">cors_rule</span> {
+    <span class="python-keyword">allowed_headers</span> = [<span class="python-string">"*"</span>]
+    <span class="python-keyword">allowed_methods</span> = [<span class="python-string">"PUT"</span>, <span class="python-string">"POST"</span>, <span class="python-string">"GET"</span>]
+    <span class="python-keyword">allowed_origins</span> = [<span class="python-string">"*"</span>]
+    <span class="python-keyword">expose_headers</span>  = [<span class="python-string">"ETag"</span>]
+    <span class="python-keyword">max_age_seconds</span> = <span class="python-number">3000</span>
+  }
+}
+
+<span class="python-comment"># S3 bucket for frontend hosting</span>
+<span class="python-keyword">resource</span> <span class="python-string">"aws_s3_bucket"</span> <span class="python-string">"frontend"</span> {
+  <span class="python-keyword">bucket</span> = <span class="python-function">var.frontend_bucket_name</span>
+
+  <span class="python-keyword">tags</span> = {
+    <span class="python-keyword">Name</span> = <span class="python-string">"xOverwatch Frontend Bucket"</span>
+    <span class="python-keyword">Type</span> = <span class="python-string">"frontend"</span>
+  }
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_s3_bucket_versioning"</span> <span class="python-string">"frontend"</span> {
+  <span class="python-keyword">bucket</span> = <span class="python-function">aws_s3_bucket.frontend.id</span>
+  <span class="python-keyword">versioning_configuration</span> {
+    <span class="python-keyword">status</span> = <span class="python-string">"Enabled"</span>
+  }
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_s3_bucket_website_configuration"</span> <span class="python-string">"frontend"</span> {
+  <span class="python-keyword">bucket</span> = <span class="python-function">aws_s3_bucket.frontend.id</span>
+
+  <span class="python-keyword">index_document</span> {
+    <span class="python-keyword">suffix</span> = <span class="python-string">"index.html"</span>
+  }
+
+  <span class="python-keyword">error_document</span> {
+    <span class="python-keyword">key</span> = <span class="python-string">"index.html"</span>
+  }
+}
+
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+<span class="python-comment"># 3. IAM & Security</span>
+<span class="python-comment">#</span>
+<span class="python-comment"># Sets up IAM roles and policies for Lambda functions following the</span>
+<span class="python-comment"># principle of least privilege for secure S3 access.</span>
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+
+<span class="python-comment"># IAM role for Lambda function</span>
+<span class="python-keyword">resource</span> <span class="python-string">"aws_iam_role"</span> <span class="python-string">"lambda_execution_role"</span> {
+  <span class="python-keyword">name</span> = <span class="python-string">"XOverwatchLambdaExecutionRole"</span>
+
+  <span class="python-keyword">assume_role_policy</span> = <span class="python-function">jsonencode</span>({
+    <span class="python-keyword">Version</span> = <span class="python-string">"2012-10-17"</span>
+    <span class="python-keyword">Statement</span> = [
+      {
+        <span class="python-keyword">Action</span> = <span class="python-string">"sts:AssumeRole"</span>
+        <span class="python-keyword">Effect</span> = <span class="python-string">"Allow"</span>
+        <span class="python-keyword">Principal</span> = {
+          <span class="python-keyword">Service</span> = <span class="python-string">"lambda.amazonaws.com"</span>
+        }
+      }
+    ]
+  })
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_iam_role_policy_attachment"</span> <span class="python-string">"lambda_basic_execution"</span> {
+  <span class="python-keyword">policy_arn</span> = <span class="python-string">"arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"</span>
+  <span class="python-keyword">role</span>       = <span class="python-function">aws_iam_role.lambda_execution_role.name</span>
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_iam_role_policy"</span> <span class="python-string">"lambda_s3_policy"</span> {
+  <span class="python-keyword">name</span> = <span class="python-string">"XOverwatchLambdaS3Policy"</span>
+  <span class="python-keyword">role</span> = <span class="python-function">aws_iam_role.lambda_execution_role.id</span>
+
+  <span class="python-keyword">policy</span> = <span class="python-function">jsonencode</span>({
+    <span class="python-keyword">Version</span> = <span class="python-string">"2012-10-17"</span>
+    <span class="python-keyword">Statement</span> = [
+      {
+        <span class="python-keyword">Effect</span> = <span class="python-string">"Allow"</span>
+        <span class="python-keyword">Action</span> = [
+          <span class="python-string">"s3:PutObject"</span>,
+          <span class="python-string">"s3:PutObjectAcl"</span>,
+          <span class="python-string">"s3:GetObject"</span>,
+          <span class="python-string">"s3:GetObjectAcl"</span>,
+          <span class="python-string">"s3:DeleteObject"</span>
+        ]
+        <span class="python-keyword">Resource</span> = <span class="python-string">"${aws_s3_bucket.uploads.arn}/*"</span>
+      },
+      {
+        <span class="python-keyword">Effect</span> = <span class="python-string">"Allow"</span>
+        <span class="python-keyword">Action</span> = [
+          <span class="python-string">"s3:ListBucket"</span>,
+          <span class="python-string">"s3:GetBucketLocation"</span>
+        ]
+        <span class="python-keyword">Resource</span> = <span class="python-function">aws_s3_bucket.uploads.arn</span>
+      }
+    ]
+  })
+}
+
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+<span class="python-comment"># 4. Lambda Functions</span>
+<span class="python-comment">#</span>
+<span class="python-comment"># Serverless functions for generating presigned URLs and handling document</span>
+<span class="python-comment"># processing with CloudWatch logging for monitoring and debugging.</span>
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+
+<span class="python-comment"># Lambda function for presigned URL generation</span>
+<span class="python-keyword">data</span> <span class="python-string">"archive_file"</span> <span class="python-string">"lambda_zip"</span> {
+  <span class="python-keyword">type</span>        = <span class="python-string">"zip"</span>
+  <span class="python-keyword">source_file</span> = <span class="python-string">"${path.module}/../lambda/generate-presigned-url.py"</span>
+  <span class="python-keyword">output_path</span> = <span class="python-string">"${path.module}/lambda-deployment.zip"</span>
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_lambda_function"</span> <span class="python-string">"presigned_url_generator"</span> {
+  <span class="python-keyword">filename</span>         = <span class="python-function">data.archive_file.lambda_zip.output_path</span>
+  <span class="python-keyword">function_name</span>    = <span class="python-string">"xoverwatch-presigned-url-generator"</span>
+  <span class="python-keyword">role</span>             = <span class="python-function">aws_iam_role.lambda_execution_role.arn</span>
+  <span class="python-keyword">handler</span>          = <span class="python-string">"generate-presigned-url.lambda_handler"</span>
+  <span class="python-keyword">source_code_hash</span> = <span class="python-function">data.archive_file.lambda_zip.output_base64sha256</span>
+  <span class="python-keyword">runtime</span>          = <span class="python-string">"python3.9"</span>
+  <span class="python-keyword">timeout</span>          = <span class="python-number">30</span>
+
+  <span class="python-keyword">environment</span> {
+    <span class="python-keyword">variables</span> = {
+      <span class="python-keyword">BUCKET_NAME</span>              = <span class="python-function">aws_s3_bucket.uploads.bucket</span>
+      <span class="python-keyword">MAX_FILE_SIZE</span>            = <span class="python-string">"104857600"</span>
+      <span class="python-keyword">PRESIGNED_URL_EXPIRATION</span> = <span class="python-string">"3600"</span>
+    }
+  }
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_cloudwatch_log_group"</span> <span class="python-string">"lambda_log_group"</span> {
+  <span class="python-keyword">name</span>              = <span class="python-string">"/aws/lambda/xoverwatch-presigned-url-generator"</span>
+  <span class="python-keyword">retention_in_days</span> = <span class="python-number">14</span>
+}
+
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+<span class="python-comment"># 5. API Gateway</span>
+<span class="python-comment">#</span>
+<span class="python-comment"># RESTful API for secure file upload operations with CORS support,</span>
+<span class="python-comment"># Lambda integration, and regional endpoint configuration.</span>
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+
+<span class="python-comment"># API Gateway REST API</span>
+<span class="python-keyword">resource</span> <span class="python-string">"aws_api_gateway_rest_api"</span> <span class="python-string">"upload_api"</span> {
+  <span class="python-keyword">name</span>        = <span class="python-string">"xoverwatch-upload-api"</span>
+  <span class="python-keyword">description</span> = <span class="python-string">"API for generating presigned URLs for file uploads"</span>
+
+  <span class="python-keyword">endpoint_configuration</span> {
+    <span class="python-keyword">types</span> = [<span class="python-string">"REGIONAL"</span>]
+  }
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_api_gateway_resource"</span> <span class="python-string">"generate_presigned_url"</span> {
+  <span class="python-keyword">rest_api_id</span> = <span class="python-function">aws_api_gateway_rest_api.upload_api.id</span>
+  <span class="python-keyword">parent_id</span>   = <span class="python-function">aws_api_gateway_rest_api.upload_api.root_resource_id</span>
+  <span class="python-keyword">path_part</span>   = <span class="python-string">"generate-presigned-url"</span>
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_api_gateway_method"</span> <span class="python-string">"generate_presigned_url_post"</span> {
+  <span class="python-keyword">rest_api_id</span>   = <span class="python-function">aws_api_gateway_rest_api.upload_api.id</span>
+  <span class="python-keyword">resource_id</span>   = <span class="python-function">aws_api_gateway_resource.generate_presigned_url.id</span>
+  <span class="python-keyword">http_method</span>   = <span class="python-string">"POST"</span>
+  <span class="python-keyword">authorization</span> = <span class="python-string">"NONE"</span>
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_api_gateway_integration"</span> <span class="python-string">"lambda_integration"</span> {
+  <span class="python-keyword">rest_api_id</span> = <span class="python-function">aws_api_gateway_rest_api.upload_api.id</span>
+  <span class="python-keyword">resource_id</span> = <span class="python-function">aws_api_gateway_resource.generate_presigned_url.id</span>
+  <span class="python-keyword">http_method</span> = <span class="python-function">aws_api_gateway_method.generate_presigned_url_post.http_method</span>
+
+  <span class="python-keyword">integration_http_method</span> = <span class="python-string">"POST"</span>
+  <span class="python-keyword">type</span>                    = <span class="python-string">"AWS_PROXY"</span>
+  <span class="python-keyword">uri</span>                     = <span class="python-function">aws_lambda_function.presigned_url_generator.invoke_arn</span>
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_api_gateway_deployment"</span> <span class="python-string">"upload_api_deployment"</span> {
+  <span class="python-keyword">depends_on</span> = [<span class="python-function">aws_api_gateway_integration.lambda_integration</span>]
+
+  <span class="python-keyword">rest_api_id</span> = <span class="python-function">aws_api_gateway_rest_api.upload_api.id</span>
+
+  <span class="python-keyword">lifecycle</span> {
+    <span class="python-keyword">create_before_destroy</span> = <span class="python-class">true</span>
+  }
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_api_gateway_stage"</span> <span class="python-string">"upload_api_stage"</span> {
+  <span class="python-keyword">deployment_id</span> = <span class="python-function">aws_api_gateway_deployment.upload_api_deployment.id</span>
+  <span class="python-keyword">rest_api_id</span>   = <span class="python-function">aws_api_gateway_rest_api.upload_api.id</span>
+  <span class="python-keyword">stage_name</span>    = <span class="python-function">var.environment</span>
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_lambda_permission"</span> <span class="python-string">"api_gateway_invoke"</span> {
+  <span class="python-keyword">statement_id</span>  = <span class="python-string">"AllowAPIGatewayInvoke"</span>
+  <span class="python-keyword">action</span>        = <span class="python-string">"lambda:InvokeFunction"</span>
+  <span class="python-keyword">function_name</span> = <span class="python-function">aws_lambda_function.presigned_url_generator.function_name</span>
+  <span class="python-keyword">principal</span>     = <span class="python-string">"apigateway.amazonaws.com"</span>
+  <span class="python-keyword">source_arn</span>    = <span class="python-string">"${aws_api_gateway_rest_api.upload_api.execution_arn}/*/*"</span>
+}
+
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+<span class="python-comment"># 6. CloudFront CDN</span>
+<span class="python-comment">#</span>
+<span class="python-comment"># Global content delivery network for frontend hosting with Origin Access</span>
+<span class="python-comment"># Control, caching policies, and custom error pages for SPA routing.</span>
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+
+<span class="python-comment"># CloudFront Origin Access Control</span>
+<span class="python-keyword">resource</span> <span class="python-string">"aws_cloudfront_origin_access_control"</span> <span class="python-string">"frontend_oac"</span> {
+  <span class="python-keyword">name</span>                              = <span class="python-string">"xoverwatch-frontend-oac"</span>
+  <span class="python-keyword">description</span>                       = <span class="python-string">"OAC for xOverwatch frontend bucket"</span>
+  <span class="python-keyword">origin_access_control_origin_type</span> = <span class="python-string">"s3"</span>
+  <span class="python-keyword">signing_behavior</span>                  = <span class="python-string">"always"</span>
+  <span class="python-keyword">signing_protocol</span>                  = <span class="python-string">"sigv4"</span>
+}
+
+<span class="python-comment"># CloudFront Distribution</span>
+<span class="python-keyword">resource</span> <span class="python-string">"aws_cloudfront_distribution"</span> <span class="python-string">"frontend_distribution"</span> {
+  <span class="python-keyword">origin</span> {
+    <span class="python-keyword">domain_name</span>              = <span class="python-function">aws_s3_bucket.frontend.bucket_regional_domain_name</span>
+    <span class="python-keyword">origin_access_control_id</span> = <span class="python-function">aws_cloudfront_origin_access_control.frontend_oac.id</span>
+    <span class="python-keyword">origin_id</span>                = <span class="python-string">"S3-${aws_s3_bucket.frontend.bucket}"</span>
+  }
+
+  <span class="python-keyword">enabled</span>             = <span class="python-class">true</span>
+  <span class="python-keyword">is_ipv6_enabled</span>     = <span class="python-class">true</span>
+  <span class="python-keyword">comment</span>             = <span class="python-string">"xOverwatch Frontend Distribution"</span>
+  <span class="python-keyword">default_root_object</span> = <span class="python-string">"index.html"</span>
+
+  <span class="python-keyword">default_cache_behavior</span> {
+    <span class="python-keyword">allowed_methods</span>  = [<span class="python-string">"DELETE"</span>, <span class="python-string">"GET"</span>, <span class="python-string">"HEAD"</span>, <span class="python-string">"OPTIONS"</span>, <span class="python-string">"PATCH"</span>, <span class="python-string">"POST"</span>, <span class="python-string">"PUT"</span>]
+    <span class="python-keyword">cached_methods</span>   = [<span class="python-string">"GET"</span>, <span class="python-string">"HEAD"</span>]
+    <span class="python-keyword">target_origin_id</span> = <span class="python-string">"S3-${aws_s3_bucket.frontend.bucket}"</span>
+
+    <span class="python-keyword">forwarded_values</span> {
+      <span class="python-keyword">query_string</span> = <span class="python-class">false</span>
+      <span class="python-keyword">cookies</span> {
+        <span class="python-keyword">forward</span> = <span class="python-string">"none"</span>
+      }
+    }
+
+    <span class="python-keyword">viewer_protocol_policy</span> = <span class="python-string">"redirect-to-https"</span>
+    <span class="python-keyword">min_ttl</span>                = <span class="python-number">0</span>
+    <span class="python-keyword">default_ttl</span>            = <span class="python-number">3600</span>
+    <span class="python-keyword">max_ttl</span>                = <span class="python-number">86400</span>
+    <span class="python-keyword">compress</span>               = <span class="python-class">true</span>
+  }
+
+  <span class="python-keyword">price_class</span> = <span class="python-string">"PriceClass_100"</span>
+
+  <span class="python-keyword">restrictions</span> {
+    <span class="python-keyword">geo_restriction</span> {
+      <span class="python-keyword">restriction_type</span> = <span class="python-string">"none"</span>
+    }
+  }
+
+  <span class="python-keyword">viewer_certificate</span> {
+    <span class="python-keyword">cloudfront_default_certificate</span> = <span class="python-class">true</span>
+  }
+
+  <span class="python-keyword">custom_error_response</span> {
+    <span class="python-keyword">error_code</span>         = <span class="python-number">404</span>
+    <span class="python-keyword">response_code</span>      = <span class="python-number">200</span>
+    <span class="python-keyword">response_page_path</span> = <span class="python-string">"/index.html"</span>
+  }
+
+  <span class="python-keyword">custom_error_response</span> {
+    <span class="python-keyword">error_code</span>         = <span class="python-number">403</span>
+    <span class="python-keyword">response_code</span>      = <span class="python-number">200</span>
+    <span class="python-keyword">response_page_path</span> = <span class="python-string">"/index.html"</span>
+  }
+
+  <span class="python-keyword">http_version</span> = <span class="python-string">"http2and3"</span>
+}
+
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+<span class="python-comment"># 7. DynamoDB Database</span>
+<span class="python-comment">#</span>
+<span class="python-comment"># NoSQL database for storing document processing job metadata with</span>
+<span class="python-comment"># pay-per-request billing, TTL for automatic cleanup, and GSI for queries.</span>
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+
+<span class="python-comment"># DynamoDB table for document processing jobs</span>
+<span class="python-keyword">resource</span> <span class="python-string">"aws_dynamodb_table"</span> <span class="python-string">"document_processing_jobs"</span> {
+  <span class="python-keyword">name</span>         = <span class="python-string">"document-processing-jobs"</span>
+  <span class="python-keyword">billing_mode</span> = <span class="python-string">"PAY_PER_REQUEST"</span>
+  <span class="python-keyword">hash_key</span>     = <span class="python-string">"job_id"</span>
+
+  <span class="python-keyword">attribute</span> {
+    <span class="python-keyword">name</span> = <span class="python-string">"job_id"</span>
+    <span class="python-keyword">type</span> = <span class="python-string">"S"</span>
+  }
+
+  <span class="python-keyword">attribute</span> {
+    <span class="python-keyword">name</span> = <span class="python-string">"user_id"</span>
+    <span class="python-keyword">type</span> = <span class="python-string">"S"</span>
+  }
+
+  <span class="python-keyword">attribute</span> {
+    <span class="python-keyword">name</span> = <span class="python-string">"created_at"</span>
+    <span class="python-keyword">type</span> = <span class="python-string">"S"</span>
+  }
+
+  <span class="python-keyword">global_secondary_index</span> {
+    <span class="python-keyword">name</span>      = <span class="python-string">"user-id-index"</span>
+    <span class="python-keyword">hash_key</span>  = <span class="python-string">"user_id"</span>
+    <span class="python-keyword">range_key</span> = <span class="python-string">"created_at"</span>
+  }
+
+  <span class="python-keyword">ttl</span> {
+    <span class="python-keyword">attribute_name</span> = <span class="python-string">"ttl"</span>
+    <span class="python-keyword">enabled</span>        = <span class="python-class">true</span>
+  }
+
+  <span class="python-keyword">tags</span> = {
+    <span class="python-keyword">Name</span> = <span class="python-string">"xOverwatch Document Processing Jobs"</span>
+  }
+}
+
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+<span class="python-comment"># 8. Identity and Authentication</span>
+<span class="python-comment">#</span>
+<span class="python-comment"># User authentication with AWS Cognito User Pools, OAuth domains,</span>
+<span class="python-comment"># and Azure AD integration. Frontend uses AWS Amplify Auth library</span>
+<span class="python-comment"># to integrate with Cognito for seamless authentication flows.</span>
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+
+<span class="python-comment"># Cognito User Pool for authentication</span>
+<span class="python-keyword">resource</span> <span class="python-string">"aws_cognito_user_pool"</span> <span class="python-string">"xoverwatch_users"</span> {
+  <span class="python-keyword">name</span> = <span class="python-string">"xoverwatch-users"</span>
+
+  <span class="python-keyword">password_policy</span> {
+    <span class="python-keyword">minimum_length</span>    = <span class="python-number">8</span>
+    <span class="python-keyword">require_lowercase</span> = <span class="python-class">true</span>
+    <span class="python-keyword">require_numbers</span>   = <span class="python-class">true</span>
+    <span class="python-keyword">require_symbols</span>   = <span class="python-class">true</span>
+    <span class="python-keyword">require_uppercase</span> = <span class="python-class">true</span>
+  }
+
+  <span class="python-keyword">auto_verified_attributes</span> = [<span class="python-string">"email"</span>]
+
+  <span class="python-keyword">verification_message_template</span> {
+    <span class="python-keyword">default_email_option</span> = <span class="python-string">"CONFIRM_WITH_CODE"</span>
+    <span class="python-keyword">email_subject</span>        = <span class="python-string">"xOverwatch Account Verification"</span>
+    <span class="python-keyword">email_message</span>        = <span class="python-string">"Your verification code is {####}"</span>
+  }
+
+  <span class="python-keyword">schema</span> {
+    <span class="python-keyword">attribute_data_type</span>      = <span class="python-string">"String"</span>
+    <span class="python-keyword">developer_only_attribute</span> = <span class="python-class">false</span>
+    <span class="python-keyword">mutable</span>                  = <span class="python-class">true</span>
+    <span class="python-keyword">name</span>                     = <span class="python-string">"email"</span>
+    <span class="python-keyword">required</span>                 = <span class="python-class">true</span>
+
+    <span class="python-keyword">string_attribute_constraints</span> {
+      <span class="python-keyword">min_length</span> = <span class="python-number">1</span>
+      <span class="python-keyword">max_length</span> = <span class="python-number">256</span>
+    }
+  }
+
+  <span class="python-keyword">tags</span> = {
+    <span class="python-keyword">Name</span> = <span class="python-string">"xOverwatch User Pool"</span>
+  }
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_cognito_user_pool_client"</span> <span class="python-string">"xoverwatch_client"</span> {
+  <span class="python-keyword">name</span>         = <span class="python-string">"xoverwatch-web-client"</span>
+  <span class="python-keyword">user_pool_id</span> = <span class="python-function">aws_cognito_user_pool.xoverwatch_users.id</span>
+
+  <span class="python-keyword">explicit_auth_flows</span> = [
+    <span class="python-string">"ALLOW_USER_SRP_AUTH"</span>,
+    <span class="python-string">"ALLOW_REFRESH_TOKEN_AUTH"</span>
+  ]
+
+  <span class="python-keyword">callback_urls</span>                 = [<span class="python-string">"https://${aws_cloudfront_distribution.frontend_distribution.domain_name}"</span>]
+  <span class="python-keyword">logout_urls</span>                   = [<span class="python-string">"https://${aws_cloudfront_distribution.frontend_distribution.domain_name}"</span>]
+
+  <span class="python-keyword">supported_identity_providers</span> = [<span class="python-string">"COGNITO"</span>]
+
+  <span class="python-keyword">access_token_validity</span>        = <span class="python-number">24</span>
+  <span class="python-keyword">id_token_validity</span>            = <span class="python-number">24</span>
+  <span class="python-keyword">refresh_token_validity</span>       = <span class="python-number">30</span>
+
+  <span class="python-keyword">token_validity_units</span> {
+    <span class="python-keyword">access_token</span>  = <span class="python-string">"hours"</span>
+    <span class="python-keyword">id_token</span>      = <span class="python-string">"hours"</span>
+    <span class="python-keyword">refresh_token</span> = <span class="python-string">"days"</span>
+  }
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_cognito_user_pool_domain"</span> <span class="python-string">"xoverwatch_domain"</span> {
+  <span class="python-keyword">domain</span>       = <span class="python-string">"xvw-auth"</span>
+  <span class="python-keyword">user_pool_id</span> = <span class="python-function">aws_cognito_user_pool.xoverwatch_users.id</span>
+}
+
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+<span class="python-comment"># 9. Frontend Hosting and Authentication Integration</span>
+<span class="python-comment">#</span>
+<span class="python-comment"># AWS Amplify for automated frontend deployment AND authentication.</span>
+<span class="python-comment"># Handles Git integration, build specs, environment variables, and</span>
+<span class="python-comment"># provides the Auth library for seamless Cognito integration.</span>
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+
+<span class="python-comment"># AWS Amplify application for frontend hosting, CI/CD, and authentication</span>
+<span class="python-comment"># Amplify serves dual purpose: hosting the frontend AND providing Auth library</span>
+<span class="python-comment"># that integrates with Cognito for user authentication flows</span>
+<span class="python-keyword">resource</span> <span class="python-string">"aws_amplify_app"</span> <span class="python-string">"xoverwatch_app"</span> {
+  <span class="python-keyword">name</span>       = <span class="python-string">"xoverwatch-frontend"</span>
+  <span class="python-keyword">repository</span> = <span class="python-string">"https://github.com/xai-team/xoverwatch"</span>
+
+  <span class="python-keyword">build_spec</span> = <span class="python-class">yamlencode</span>({
+    <span class="python-keyword">version</span> = <span class="python-string">"1.0"</span>
+    <span class="python-keyword">frontend</span> = {
+      <span class="python-keyword">phases</span> = {
+        <span class="python-keyword">preBuild</span> = {
+          <span class="python-keyword">commands</span> = [
+            <span class="python-string">"npm ci"</span>
+          ]
+        }
+        <span class="python-keyword">build</span> = {
+          <span class="python-keyword">commands</span> = [
+            <span class="python-string">"npm run build"</span>
+          ]
+        }
+      }
+      <span class="python-keyword">artifacts</span> = {
+        <span class="python-keyword">baseDirectory</span> = <span class="python-string">"dist"</span>
+        <span class="python-keyword">files</span> = [<span class="python-string">"**/*"</span>]
+      }
+      <span class="python-keyword">cache</span> = {
+        <span class="python-keyword">paths</span> = [<span class="python-string">"node_modules/**/*"</span>]
+      }
+    }
+  })
+
+  <span class="python-keyword">environment_variables</span> = {
+    <span class="python-keyword">NODE_ENV</span>                 = <span class="python-string">"production"</span>
+    <span class="python-keyword">VITE_USER_POOL_ID</span>        = <span class="python-function">aws_cognito_user_pool.xoverwatch_users.id</span>
+    <span class="python-keyword">VITE_USER_POOL_CLIENT_ID</span> = <span class="python-function">aws_cognito_user_pool_client.xoverwatch_client.id</span>
+    <span class="python-keyword">VITE_API_GATEWAY_URL</span>     = <span class="python-string">"https://${aws_api_gateway_rest_api.upload_api.id}.execute-api.${data.aws_region.current.name}.amazonaws.com/${var.environment}"</span>
+  }
+
+  <span class="python-keyword">custom_rule</span> {
+    <span class="python-keyword">source</span> = <span class="python-string">"/&lt;*&gt;"</span>
+    <span class="python-keyword">status</span> = <span class="python-string">"404"</span>
+    <span class="python-keyword">target</span> = <span class="python-string">"/index.html"</span>
+  }
+
+  <span class="python-keyword">tags</span> = {
+    <span class="python-keyword">Name</span> = <span class="python-string">"xOverwatch Amplify App"</span>
+  }
+}
+
+<span class="python-keyword">resource</span> <span class="python-string">"aws_amplify_branch"</span> <span class="python-string">"main"</span> {
+  <span class="python-keyword">app_id</span>      = <span class="python-function">aws_amplify_app.xoverwatch_app.id</span>
+  <span class="python-keyword">branch_name</span> = <span class="python-string">"main"</span>
+
+  <span class="python-keyword">enable_auto_build</span> = <span class="python-class">true</span>
+
+  <span class="python-keyword">environment_variables</span> = {
+    <span class="python-keyword">NODE_ENV</span> = <span class="python-string">"production"</span>
+  }
+
+  <span class="python-keyword">stage</span> = <span class="python-string">"PRODUCTION"</span>
+}
+
+<span class="python-comment"># Azure AD integration for enterprise authentication</span>
+<span class="python-keyword">resource</span> <span class="python-string">"aws_cognito_identity_provider"</span> <span class="python-string">"azure_ad"</span> {
+  <span class="python-keyword">user_pool_id</span>  = <span class="python-function">aws_cognito_user_pool.xoverwatch_users.id</span>
+  <span class="python-keyword">provider_name</span> = <span class="python-string">"AzureAD"</span>
+  <span class="python-keyword">provider_type</span> = <span class="python-string">"OIDC"</span>
+
+  <span class="python-keyword">provider_details</span> = {
+    <span class="python-keyword">client_id</span>                = <span class="python-function">var.azure_ad_client_id</span>
+    <span class="python-keyword">client_secret</span>            = <span class="python-function">var.azure_ad_client_secret</span>
+    <span class="python-keyword">attributes_request_method</span> = <span class="python-string">"GET"</span>
+    <span class="python-keyword">oidc_issuer</span>               = <span class="python-string">"https://login.microsoftonline.com/${var.azure_ad_tenant_id}/v2.0"</span>
+    <span class="python-keyword">authorize_scopes</span>          = <span class="python-string">"openid email profile"</span>
+  }
+
+  <span class="python-keyword">attribute_mapping</span> = {
+    <span class="python-keyword">email</span>    = <span class="python-string">"email"</span>
+    <span class="python-keyword">username</span> = <span class="python-string">"sub"</span>
+    <span class="python-keyword">name</span>     = <span class="python-string">"name"</span>
+  }
+}
+
+<span class="python-keyword">variable</span> <span class="python-string">"azure_ad_client_id"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"Azure AD application client ID"</span>
+  <span class="python-keyword">type</span>        = <span class="python-class">string</span>
+  <span class="python-keyword">sensitive</span>   = <span class="python-class">true</span>
+}
+
+<span class="python-keyword">variable</span> <span class="python-string">"azure_ad_client_secret"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"Azure AD application client secret"</span>
+  <span class="python-keyword">type</span>        = <span class="python-class">string</span>
+  <span class="python-keyword">sensitive</span>   = <span class="python-class">true</span>
+}
+
+<span class="python-keyword">variable</span> <span class="python-string">"azure_ad_tenant_id"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"Azure AD tenant ID"</span>
+  <span class="python-keyword">type</span>        = <span class="python-class">string</span>
+  <span class="python-keyword">sensitive</span>   = <span class="python-class">true</span>
+}
+
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+<span class="python-comment"># 10. Outputs</span>
+<span class="python-comment">#</span>
+<span class="python-comment"># Export key resource identifiers and URLs for application configuration</span>
+<span class="python-comment"># and integration with frontend environment variables.</span>
+<span class="python-comment">#-------------------------------------------------------------------------------</span>
+
+<span class="python-comment"># Outputs</span>
+<span class="python-keyword">output</span> <span class="python-string">"uploads_bucket_name"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"Name of the S3 bucket for uploads"</span>
+  <span class="python-keyword">value</span>       = <span class="python-function">aws_s3_bucket.uploads.bucket</span>
+}
+
+<span class="python-keyword">output</span> <span class="python-string">"frontend_bucket_name"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"Name of the S3 bucket for frontend hosting"</span>
+  <span class="python-keyword">value</span>       = <span class="python-function">aws_s3_bucket.frontend.bucket</span>
+}
+
+<span class="python-keyword">output</span> <span class="python-string">"api_gateway_url"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"URL of the API Gateway"</span>
+  <span class="python-keyword">value</span>       = <span class="python-string">"https://${aws_api_gateway_rest_api.upload_api.id}.execute-api.${data.aws_region.current.name}.amazonaws.com/${var.environment}"</span>
+}
+
+<span class="python-keyword">output</span> <span class="python-string">"cloudfront_domain_name"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"CloudFront Distribution domain name"</span>
+  <span class="python-keyword">value</span>       = <span class="python-function">aws_cloudfront_distribution.frontend_distribution.domain_name</span>
+}
+
+<span class="python-keyword">output</span> <span class="python-string">"cloudfront_url"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"CloudFront Distribution URL"</span>
+  <span class="python-keyword">value</span>       = <span class="python-string">"https://${aws_cloudfront_distribution.frontend_distribution.domain_name}"</span>
+}
+
+<span class="python-keyword">output</span> <span class="python-string">"deployment_info"</span> {
+  <span class="python-keyword">description</span> = <span class="python-string">"Key deployment information"</span>
+  <span class="python-keyword">value</span> = {
+    <span class="python-keyword">region</span>                  = <span class="python-function">data.aws_region.current.name</span>
+    <span class="python-keyword">account_id</span>             = <span class="python-function">data.aws_caller_identity.current.account_id</span>
+    <span class="python-keyword">uploads_bucket</span>         = <span class="python-function">aws_s3_bucket.uploads.bucket</span>
+    <span class="python-keyword">frontend_bucket</span>        = <span class="python-function">aws_s3_bucket.frontend.bucket</span>
+    <span class="python-keyword">api_gateway_url</span>        = <span class="python-string">"https://${aws_api_gateway_rest_api.upload_api.id}.execute-api.${data.aws_region.current.name}.amazonaws.com/${var.environment}"</span>
+    <span class="python-keyword">cloudfront_url</span>         = <span class="python-string">"https://${aws_cloudfront_distribution.frontend_distribution.domain_name}"</span>
+    <span class="python-keyword">lambda_function</span>        = <span class="python-function">aws_lambda_function.presigned_url_generator.function_name</span>
+    <span class="python-keyword">dynamodb_table</span>         = <span class="python-function">aws_dynamodb_table.document_processing_jobs.name</span>
+    <span class="python-keyword">cognito_user_pool_id</span>   = <span class="python-function">aws_cognito_user_pool.xoverwatch_users.id</span>
+    <span class="python-keyword">cognito_client_id</span>      = <span class="python-function">aws_cognito_user_pool_client.xoverwatch_client.id</span>
+    <span class="python-keyword">cognito_domain</span>         = <span class="python-string">"https://${aws_cognito_user_pool_domain.xoverwatch_domain.domain}.auth.${data.aws_region.current.name}.amazoncognito.com"</span>
+    <span class="python-keyword">amplify_app_url</span>        = <span class="python-string">"https://${aws_amplify_branch.main.branch_name}.${aws_amplify_app.xoverwatch_app.default_domain}"</span>
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <style>
+    .defense-strategies-container {
+        background: #2a2a2a;
+        border: 1px solid #444;
+        border-radius: 10px;
+        margin: 25px 0;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .defense-strategies-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #F19E38, #ff8c42);
+    }
+    
+    .defense-header {
+        background: linear-gradient(135deg, #333, #2a2a2a);
+        color: #F19E38;
+        padding: 18px 25px;
+        margin: 0;
+        font-size: 1.2em;
+        font-weight: 600;
+        border-bottom: 1px solid #444;
+    }
+    
+    .strategies-content {
+        padding: 25px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+    }
+    
+    .strategy-item {
+        position: relative;
+        padding-left: 15px;
+    }
+    
+    .strategy-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 3px;
+        height: 20px;
+        background: #F19E38;
+        border-radius: 2px;
+    }
+    
+    .strategy-name {
+        color: #F19E38;
+        margin: 0 0 10px 0;
+        font-size: 1.1em;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    
+    .strategy-desc {
+        color: #ccc;
+        line-height: 1.6;
+        margin: 0;
+        font-size: 0.95em;
+    }
+    </style>
+
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle evaluations button
+            const evaluationsButton = document.getElementById('evaluationsButton');
+            if (evaluationsButton) {
+                evaluationsButton.addEventListener('click', function() {
+                    window.location.href = '/evaluations';
+                });
+            }
+            
+            // Handle documentation button
+            const documentationButton = document.getElementById('documentationButton');
+            if (documentationButton) {
+                documentationButton.addEventListener('click', function() {
+                    window.location.href = '/documentation';
+                });
+            }
+            
+            // Smooth scrolling functionality is now handled by inline onclick handlers
+            
+            // Scrollspy functionality
+            function updateActiveSection() {
+                const sections = document.querySelectorAll('.doc-section');
+                const sidebarLinks = document.querySelectorAll('.sidebar span');
+                
+                let currentSection = '';
+                const scrollTop = window.pageYOffset;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100; // Offset for header
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollTop >= sectionTop && scrollTop < sectionTop + sectionHeight) {
+                        currentSection = sectionId;
+                    }
+                });
+                
+                // Update active state in sidebar
+                sidebarLinks.forEach(link => {
+                    link.classList.remove('active');
+                    // Check if the span's onclick references the current section
+                    const onclick = link.getAttribute('onclick');
+                    if (onclick && onclick.includes(`'${currentSection}'`)) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            // Listen for scroll events
+            window.addEventListener('scroll', updateActiveSection);
+            
+            // Initial call to set active section
+            updateActiveSection();
+            
+            // Add line numbers to code blocks
+            function addLineNumbers() {
+                // Apply line numbers to all gist-file-content blocks
+                const lineNumberedBlocks = document.querySelectorAll('.gist-file-content');
+                
+                lineNumberedBlocks.forEach(block => {
+                    const pre = block.querySelector('pre');
+                    const code = block.querySelector('code');
+                    if (!pre || !code) return;
+                    
+                    const startLine = parseInt(block.getAttribute('data-start') || '1');
+                    
+                    // Get exact line count by splitting the text content
+                    const textContent = code.textContent || code.innerText;
+                    const lines = textContent.split('\n');
+                    const exactLineCount = lines.length;
+                    
+                    // Create simple wrapper
+                    const wrapper = document.createElement('div');
+                    wrapper.style.cssText = `
+                        display: flex;
+                        width: 100%;
+                        background: #0d1117;
+                    `;
+                    
+                    // Line numbers column - exact number of lines
+                    const lineNumbersDiv = document.createElement('div');
+                    lineNumbersDiv.style.cssText = `
+                        background: #0d1117;
+                        color: #7d8590;
+                        text-align: right;
+                        padding: 16px;
+                        border-right: 1px solid #30363d;
+                        user-select: none;
+                        width: 60px;
+                        flex-shrink: 0;
+                        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+                        font-size: 14px;
+                        line-height: 1.45;
+                        white-space: pre;
+                    `;
+                    
+                    // Generate exact number of line numbers
+                    let lineNumbers = '';
+                    for (let i = 0; i < exactLineCount; i++) {
+                        if (i > 0) lineNumbers += '\n';
+                        lineNumbers += (startLine + i).toString();
+                    }
+                    lineNumbersDiv.textContent = lineNumbers;
+                    
+                    // Code content - keep original structure
+                    const codeDiv = document.createElement('div');
+                    codeDiv.style.cssText = `
+                        flex: 1;
+                        overflow-x: auto;
+                    `;
+                    codeDiv.appendChild(pre);
+                    
+                    // Assemble
+                    wrapper.appendChild(lineNumbersDiv);
+                    wrapper.appendChild(codeDiv);
+                    
+                    // Replace content
+                    block.innerHTML = '';
+                    block.appendChild(wrapper);
+                });
+            }
+            
+            // Add line numbers when page loads
+            addLineNumbers();
+        });
+        
+        // Copy code block functionality
+        function copyCodeBlock(button) {
+            const gistFile = button.closest('.gist-file');
+            const codeElement = gistFile.querySelector('code');
+            
+            if (!codeElement) return;
+            
+            // Get the text content of the code
+            const codeText = codeElement.textContent || codeElement.innerText;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(codeText).then(() => {
+                // Visual feedback
+                const originalContent = button.innerHTML;
+                button.classList.add('copied');
+                button.innerHTML = `
+                    <svg class="copy-icon" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/>
+                    </svg>
+                `;
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    button.classList.remove('copied');
+                    button.innerHTML = originalContent;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy code: ', err);
+                
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = codeText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    
+                    // Visual feedback for fallback
+                    const originalContent = button.innerHTML;
+                    button.classList.add('copied');
+                    button.innerHTML = `
+                        <svg class="copy-icon" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/>
+                        </svg>
+                    `;
+                    
+                    setTimeout(() => {
+                        button.classList.remove('copied');
+                        button.innerHTML = originalContent;
+                    }, 2000);
+                } catch (fallbackErr) {
+                    console.error('Fallback copy failed: ', fallbackErr);
+                }
+                
+                document.body.removeChild(textArea);
+            });
+        }
+    </script>
+</body>
+</html>
